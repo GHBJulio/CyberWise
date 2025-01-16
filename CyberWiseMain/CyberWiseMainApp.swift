@@ -10,23 +10,24 @@ import SwiftData
 
 @main
 struct CyberWiseMainApp: App {
-    var sharedModelContainer: ModelContainer = {
-        let schema = Schema([
-            Item.self,
-        ])
-        let modelConfiguration = ModelConfiguration(schema: schema, isStoredInMemoryOnly: false)
-
-        do {
-            return try ModelContainer(for: schema, configurations: [modelConfiguration])
-        } catch {
-            fatalError("Could not create ModelContainer: \(error)")
-        }
-    }()
+    @StateObject private var loginManager = LoginManager()
 
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            AppView()
+                .environmentObject(loginManager)
         }
-        .modelContainer(sharedModelContainer)
+    }
+}
+
+struct AppView: View {
+    @EnvironmentObject var loginManager: LoginManager
+
+    var body: some View {
+        if loginManager.isAuthenticated {
+            HomeScreenUI()
+        } else {
+            LoginScreenUI()
+        }
     }
 }

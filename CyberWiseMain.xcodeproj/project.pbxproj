@@ -7,6 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		113C78192D147C5D00F5C0B6 /* LoginScreenUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 113C78182D147C5D00F5C0B6 /* LoginScreenUI.swift */; };
+		113C781B2D14C4F300F5C0B6 /* SignUpScreenUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 113C781A2D14C4F300F5C0B6 /* SignUpScreenUI.swift */; };
+		113C781D2D15A40C00F5C0B6 /* FirstOnBoardingScreenUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 113C781C2D15A40C00F5C0B6 /* FirstOnBoardingScreenUI.swift */; };
+		113C781F2D15AD0E00F5C0B6 /* SecondOnBoardingScreenUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 113C781E2D15AD0E00F5C0B6 /* SecondOnBoardingScreenUI.swift */; };
+		113C78212D15EE5500F5C0B6 /* LoginManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 113C78202D15EE5500F5C0B6 /* LoginManager.swift */; };
 		1155EF4D2CF8E16D007EE3EB /* CyberWiseMainApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1155EF4C2CF8E16D007EE3EB /* CyberWiseMainApp.swift */; };
 		1155EF4F2CF8E16D007EE3EB /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1155EF4E2CF8E16D007EE3EB /* ContentView.swift */; };
 		1155EF512CF8E16D007EE3EB /* Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1155EF502CF8E16D007EE3EB /* Item.swift */; };
@@ -15,6 +20,15 @@
 		1155EF602CF8E16E007EE3EB /* CyberWiseMainTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1155EF5F2CF8E16E007EE3EB /* CyberWiseMainTests.swift */; };
 		1155EF6A2CF8E16E007EE3EB /* CyberWiseMainUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1155EF692CF8E16E007EE3EB /* CyberWiseMainUITests.swift */; };
 		1155EF6C2CF8E16E007EE3EB /* CyberWiseMainUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1155EF6B2CF8E16E007EE3EB /* CyberWiseMainUITestsLaunchTests.swift */; };
+		11A6BD0F2D38169700DE6FF4 /* LearningHubUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11A6BD0E2D38169700DE6FF4 /* LearningHubUI.swift */; };
+		11A6BD132D3816BF00DE6FF4 /* LearnPageUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11A6BD122D3816BF00DE6FF4 /* LearnPageUI.swift */; };
+		11B22FDC2D0326B100B05BDC /* Account.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B22FDB2D0326B100B05BDC /* Account.swift */; };
+		11B8FA172D38144D00A0A146 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B22FE02D0337BA00B05BDC /* LoginView.swift */; };
+		11CD898C2D32BA0600891BAD /* HomeScreenUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11CD898B2D32BA0600891BAD /* HomeScreenUI.swift */; };
+		11CD89902D32C46A00891BAD /* EmergencyAlertsPageUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11CD898F2D32C46A00891BAD /* EmergencyAlertsPageUI.swift */; };
+		11CD89922D32C47F00891BAD /* ManagePasswordsPageUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11CD89912D32C47F00891BAD /* ManagePasswordsPageUI.swift */; };
+		11CD89942D32C48E00891BAD /* VerifyCallersPageUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11CD89932D32C48E00891BAD /* VerifyCallersPageUI.swift */; };
+		11CD89962D32C49B00891BAD /* CheckForScamsPageUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11CD89952D32C49B00891BAD /* CheckForScamsPageUI.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -35,6 +49,11 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		113C78182D147C5D00F5C0B6 /* LoginScreenUI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginScreenUI.swift; sourceTree = "<group>"; };
+		113C781A2D14C4F300F5C0B6 /* SignUpScreenUI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpScreenUI.swift; sourceTree = "<group>"; };
+		113C781C2D15A40C00F5C0B6 /* FirstOnBoardingScreenUI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstOnBoardingScreenUI.swift; sourceTree = "<group>"; };
+		113C781E2D15AD0E00F5C0B6 /* SecondOnBoardingScreenUI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecondOnBoardingScreenUI.swift; sourceTree = "<group>"; };
+		113C78202D15EE5500F5C0B6 /* LoginManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginManager.swift; sourceTree = "<group>"; };
 		1155EF492CF8E16D007EE3EB /* CyberWiseMain.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CyberWiseMain.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1155EF4C2CF8E16D007EE3EB /* CyberWiseMainApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CyberWiseMainApp.swift; sourceTree = "<group>"; };
 		1155EF4E2CF8E16D007EE3EB /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -46,6 +65,15 @@
 		1155EF652CF8E16E007EE3EB /* CyberWiseMainUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CyberWiseMainUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		1155EF692CF8E16E007EE3EB /* CyberWiseMainUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CyberWiseMainUITests.swift; sourceTree = "<group>"; };
 		1155EF6B2CF8E16E007EE3EB /* CyberWiseMainUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CyberWiseMainUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		11A6BD0E2D38169700DE6FF4 /* LearningHubUI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LearningHubUI.swift; sourceTree = "<group>"; };
+		11A6BD122D3816BF00DE6FF4 /* LearnPageUI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LearnPageUI.swift; sourceTree = "<group>"; };
+		11B22FDB2D0326B100B05BDC /* Account.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Account.swift; sourceTree = "<group>"; };
+		11B22FE02D0337BA00B05BDC /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
+		11CD898B2D32BA0600891BAD /* HomeScreenUI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeScreenUI.swift; sourceTree = "<group>"; };
+		11CD898F2D32C46A00891BAD /* EmergencyAlertsPageUI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmergencyAlertsPageUI.swift; sourceTree = "<group>"; };
+		11CD89912D32C47F00891BAD /* ManagePasswordsPageUI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManagePasswordsPageUI.swift; sourceTree = "<group>"; };
+		11CD89932D32C48E00891BAD /* VerifyCallersPageUI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerifyCallersPageUI.swift; sourceTree = "<group>"; };
+		11CD89952D32C49B00891BAD /* CheckForScamsPageUI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckForScamsPageUI.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -96,6 +124,7 @@
 		1155EF4B2CF8E16D007EE3EB /* CyberWiseMain */ = {
 			isa = PBXGroup;
 			children = (
+				11B22FD62D03249300B05BDC /* MVC */,
 				1155EF4C2CF8E16D007EE3EB /* CyberWiseMainApp.swift */,
 				1155EF4E2CF8E16D007EE3EB /* ContentView.swift */,
 				1155EF502CF8E16D007EE3EB /* Item.swift */,
@@ -128,6 +157,51 @@
 				1155EF6B2CF8E16E007EE3EB /* CyberWiseMainUITestsLaunchTests.swift */,
 			);
 			path = CyberWiseMainUITests;
+			sourceTree = "<group>";
+		};
+		11B22FD62D03249300B05BDC /* MVC */ = {
+			isa = PBXGroup;
+			children = (
+				11B22FDF2D0327D700B05BDC /* Model */,
+				11B22FDE2D0327CF00B05BDC /* Controller */,
+				11B22FDD2D0327CB00B05BDC /* View */,
+			);
+			path = MVC;
+			sourceTree = "<group>";
+		};
+		11B22FDD2D0327CB00B05BDC /* View */ = {
+			isa = PBXGroup;
+			children = (
+				11B22FE02D0337BA00B05BDC /* LoginView.swift */,
+				113C78182D147C5D00F5C0B6 /* LoginScreenUI.swift */,
+				113C781A2D14C4F300F5C0B6 /* SignUpScreenUI.swift */,
+				113C781C2D15A40C00F5C0B6 /* FirstOnBoardingScreenUI.swift */,
+				113C781E2D15AD0E00F5C0B6 /* SecondOnBoardingScreenUI.swift */,
+				11CD898B2D32BA0600891BAD /* HomeScreenUI.swift */,
+				11CD898F2D32C46A00891BAD /* EmergencyAlertsPageUI.swift */,
+				11CD89912D32C47F00891BAD /* ManagePasswordsPageUI.swift */,
+				11CD89932D32C48E00891BAD /* VerifyCallersPageUI.swift */,
+				11CD89952D32C49B00891BAD /* CheckForScamsPageUI.swift */,
+				11A6BD0E2D38169700DE6FF4 /* LearningHubUI.swift */,
+				11A6BD122D3816BF00DE6FF4 /* LearnPageUI.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		11B22FDE2D0327CF00B05BDC /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				113C78202D15EE5500F5C0B6 /* LoginManager.swift */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		11B22FDF2D0327D700B05BDC /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				11B22FDB2D0326B100B05BDC /* Account.swift */,
+			);
+			path = Model;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -260,9 +334,23 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				113C781B2D14C4F300F5C0B6 /* SignUpScreenUI.swift in Sources */,
+				11A6BD132D3816BF00DE6FF4 /* LearnPageUI.swift in Sources */,
+				113C781D2D15A40C00F5C0B6 /* FirstOnBoardingScreenUI.swift in Sources */,
 				1155EF4F2CF8E16D007EE3EB /* ContentView.swift in Sources */,
+				11A6BD0F2D38169700DE6FF4 /* LearningHubUI.swift in Sources */,
+				11CD89962D32C49B00891BAD /* CheckForScamsPageUI.swift in Sources */,
+				11CD89942D32C48E00891BAD /* VerifyCallersPageUI.swift in Sources */,
+				113C78212D15EE5500F5C0B6 /* LoginManager.swift in Sources */,
+				11CD898C2D32BA0600891BAD /* HomeScreenUI.swift in Sources */,
+				11CD89922D32C47F00891BAD /* ManagePasswordsPageUI.swift in Sources */,
 				1155EF512CF8E16D007EE3EB /* Item.swift in Sources */,
+				11B8FA172D38144D00A0A146 /* LoginView.swift in Sources */,
 				1155EF4D2CF8E16D007EE3EB /* CyberWiseMainApp.swift in Sources */,
+				11CD89902D32C46A00891BAD /* EmergencyAlertsPageUI.swift in Sources */,
+				11B22FDC2D0326B100B05BDC /* Account.swift in Sources */,
+				113C78192D147C5D00F5C0B6 /* LoginScreenUI.swift in Sources */,
+				113C781F2D15AD0E00F5C0B6 /* SecondOnBoardingScreenUI.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
