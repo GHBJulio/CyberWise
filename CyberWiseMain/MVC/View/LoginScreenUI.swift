@@ -77,10 +77,10 @@ struct LoginScreenUI: View {
                         Button(action: {
                             loginManager.login(username: username, password: password)
                             
-//                            if loginManager.isAuthenticated {
-//                                navigateToOnboarding = true // Trigger navigation
-//                                
-//                            }
+                            if loginManager.isAuthenticated {
+                                navigateToOnboarding = true // Trigger navigation
+                                
+                            }
                         }) {
                             Text("Log In")
                                 .foregroundColor(.white)

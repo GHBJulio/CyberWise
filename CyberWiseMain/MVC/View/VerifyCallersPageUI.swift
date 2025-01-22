@@ -63,7 +63,7 @@ struct VerifyCallersPageUI: View {
                             ForEach(countries, id: \.id) { country in
                                 Button(action: {
                                     selectedCountry = country
-                                    phoneNumber = "" // Clear number when country changes
+                                    phoneNumber = ""
                                 }) {
                                     HStack {
                                         Text(country.flag)
@@ -189,22 +189,6 @@ struct VerifyCallersPageUI: View {
     }
 }
 
-// MARK: - Country Model
-struct Country: Identifiable {
-    let id = UUID()
-    let name: String
-    let code: String
-    let flag: String
-}
-
-// MARK: - Sample Countries Data
-let countries: [Country] = [
-    Country(name: "United Kingdom", code: "+44", flag: "🇬🇧"),
-    Country(name: "United States", code: "+1", flag: "🇺🇸"),
-    Country(name: "India", code: "+91", flag: "🇮🇳"),
-    Country(name: "Brazil", code: "+55", flag: "🇧🇷"),
-    Country(name: "France", code: "+33", flag: "🇫🇷")
-]
 
 #Preview {
     VerifyCallersPageUI()

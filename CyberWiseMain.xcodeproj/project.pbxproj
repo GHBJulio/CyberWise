@@ -10,6 +10,9 @@
 		113C056F2D39642E00759A78 /* MaliciousURLAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 113C056E2D39642E00759A78 /* MaliciousURLAPI.swift */; };
 		113C05712D39971200759A78 /* emailValidatorAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 113C05702D39971200759A78 /* emailValidatorAPI.swift */; };
 		113C05732D39A72400759A78 /* phoneValidationAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 113C05722D39A72400759A78 /* phoneValidationAPI.swift */; };
+		113C057B2D3D3D7700759A78 /* Country.swift in Sources */ = {isa = PBXBuildFile; fileRef = 113C057A2D3D3D7700759A78 /* Country.swift */; };
+		113C057D2D3D446500759A78 /* EncryptionHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 113C057C2D3D446500759A78 /* EncryptionHelper.swift */; };
+		113C057F2D3D448500759A78 /* PasswordManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 113C057E2D3D448500759A78 /* PasswordManager.swift */; };
 		113C78192D147C5D00F5C0B6 /* LoginScreenUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 113C78182D147C5D00F5C0B6 /* LoginScreenUI.swift */; };
 		113C781B2D14C4F300F5C0B6 /* SignUpScreenUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 113C781A2D14C4F300F5C0B6 /* SignUpScreenUI.swift */; };
 		113C781D2D15A40C00F5C0B6 /* FirstOnBoardingScreenUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 113C781C2D15A40C00F5C0B6 /* FirstOnBoardingScreenUI.swift */; };
@@ -55,6 +58,9 @@
 		113C056E2D39642E00759A78 /* MaliciousURLAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MaliciousURLAPI.swift; sourceTree = "<group>"; };
 		113C05702D39971200759A78 /* emailValidatorAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = emailValidatorAPI.swift; sourceTree = "<group>"; };
 		113C05722D39A72400759A78 /* phoneValidationAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = phoneValidationAPI.swift; sourceTree = "<group>"; };
+		113C057A2D3D3D7700759A78 /* Country.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Country.swift; sourceTree = "<group>"; };
+		113C057C2D3D446500759A78 /* EncryptionHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EncryptionHelper.swift; sourceTree = "<group>"; };
+		113C057E2D3D448500759A78 /* PasswordManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasswordManager.swift; sourceTree = "<group>"; };
 		113C78182D147C5D00F5C0B6 /* LoginScreenUI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginScreenUI.swift; sourceTree = "<group>"; };
 		113C781A2D14C4F300F5C0B6 /* SignUpScreenUI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpScreenUI.swift; sourceTree = "<group>"; };
 		113C781C2D15A40C00F5C0B6 /* FirstOnBoardingScreenUI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstOnBoardingScreenUI.swift; sourceTree = "<group>"; };
@@ -201,6 +207,9 @@
 				113C056E2D39642E00759A78 /* MaliciousURLAPI.swift */,
 				113C05702D39971200759A78 /* emailValidatorAPI.swift */,
 				113C05722D39A72400759A78 /* phoneValidationAPI.swift */,
+				113C057A2D3D3D7700759A78 /* Country.swift */,
+				113C057C2D3D446500759A78 /* EncryptionHelper.swift */,
+				113C057E2D3D448500759A78 /* PasswordManager.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -350,8 +359,11 @@
 				11A6BD0F2D38169700DE6FF4 /* LearningHubUI.swift in Sources */,
 				11CD89962D32C49B00891BAD /* CheckForScamsPageUI.swift in Sources */,
 				11CD89942D32C48E00891BAD /* VerifyCallersPageUI.swift in Sources */,
+				113C057B2D3D3D7700759A78 /* Country.swift in Sources */,
 				113C78212D15EE5500F5C0B6 /* LoginManager.swift in Sources */,
 				11CD898C2D32BA0600891BAD /* HomeScreenUI.swift in Sources */,
+				113C057F2D3D448500759A78 /* PasswordManager.swift in Sources */,
+				113C057D2D3D446500759A78 /* EncryptionHelper.swift in Sources */,
 				11CD89922D32C47F00891BAD /* ManagePasswordsPageUI.swift in Sources */,
 				1155EF512CF8E16D007EE3EB /* Item.swift in Sources */,
 				113C056F2D39642E00759A78 /* MaliciousURLAPI.swift in Sources */,
