@@ -5,6 +5,74 @@
 //  Created by GUILHERME JULIO on 28/11/2024.
 //
 
+
+
+// MARK: - StandardLessonHeader (Reusable for Lessons & General Screens)
+struct StandardLessonHeader: View {
+    var title: String
+    @Binding var isFirstSection: Bool // Binding to track if it's the first section
+    var showExitAlert: Bool = true // Enables/disables exit confirmation
+    var onExitConfirmed: () -> Void
+    var onBackPressed: () -> Void
+    @State private var showAlert: Bool = false // Controls the exit alert
+
+    // Colors matching your style
+    private let primaryColor = Color(hex: "6D8FDF")
+
+    var body: some View {
+        ZStack(alignment: .top) {
+            // Header background
+            Rectangle()
+                .fill(primaryColor)
+                .frame(height: 110)
+                .edgesIgnoringSafeArea(.top)
+
+            VStack(spacing: 0) {
+                Spacer().frame(height: 30) // Adjust spacing
+
+                HStack {
+                    // Back Button with logic based on `isFirstSection`
+                    Button(action: {
+                        if isFirstSection && showExitAlert {
+                            showAlert = true // Show exit confirmation only if it's Section 1
+                        } else {
+                            onBackPressed() // Just go back for other sections
+                        }
+                    }) {
+                        Image(systemName: "arrow.left")
+                            .font(.system(size: 24))
+                            .foregroundColor(.white)
+                    }
+                    .padding(.leading, 16)
+
+                    Spacer()
+
+                    // Title
+                    Text(title)
+                        .font(.title2)
+                        .fontWeight(.bold)
+                        .foregroundColor(.white)
+                        .padding(.trailing, 40)
+
+                    Spacer()
+                }
+                .padding(.top, -5)
+            }
+        }
+        .frame(height: 60) // Consistent header height
+        .alert("Exit Lesson?", isPresented: $showAlert) {
+            Button("Yes, Exit", role: .destructive) {
+                onExitConfirmed()
+            }
+            Button("Cancel", role: .cancel) { }
+        } message: {
+            Text("Are you sure you want to exit this lesson?")
+        }
+    }
+}
+
+
+
 import SwiftUI
 import SwiftData
 

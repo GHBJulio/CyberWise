@@ -44,10 +44,18 @@ struct TopSectionView: View {
                 HStack {
                     // Profile Image with Settings Icon
                     ZStack(alignment: .topTrailing) {
-                        Image("defaultImage") // Replace with your asset name
-                            .resizable()
-                            .frame(width: 120, height: 120)
-                            .clipShape(Circle())
+                        // Use the user's profile image if available, otherwise use default
+                        if let imageName = loginManager.currentUser?.profileImageName {
+                            Image(imageName)
+                                .resizable()
+                                .frame(width: 120, height: 120)
+                                .clipShape(Circle())
+                        } else {
+                            Image("defaultImage")
+                                .resizable()
+                                .frame(width: 120, height: 120)
+                                .clipShape(Circle())
+                        }
 
                         // Gear Icon for Settings
                         Button(action: {
@@ -60,7 +68,7 @@ struct TopSectionView: View {
                                 .background(Color.gray.opacity(0.7))
                                 .clipShape(Circle())
                         }
-                        .offset(x: 10, y: -10)
+                        .offset(x: 10)
                     }
 
                     Spacer()
@@ -86,10 +94,10 @@ struct TopSectionView: View {
                     }
                 }
                 .padding(.horizontal, 50) // Balance padding on both sides
-                .padding(.top, 40) // Adjust for proper spacing
+                .padding(.top) // Adjust for proper spacing
             }
         }
-        .offset(y: -30)
+        .padding(.top, -30)
         .sheet(isPresented: $showSettings) {
             SettingsModalView()
                 .environmentObject(loginManager) // Pass login manager to settings
@@ -113,11 +121,12 @@ struct LearnSectionView: View {
                         .fontWeight(.bold)
                 }
                 
-                Text("Understand How To Spot Phishing Emails And Online Scams.").font(.system(size: 12))
-                .foregroundColor(.black)
-                .multilineTextAlignment(.leading)
-                .frame(maxWidth: .infinity, alignment: .leading) // Ensure enough space for wrapping
-                .fixedSize(horizontal: false, vertical: true)
+                Text("Understand How To Spot Phishing Emails And Online Scams.")
+                    .font(.system(size: 12))
+                    .foregroundColor(.black)
+                    .multilineTextAlignment(.leading)
+                    .frame(maxWidth: .infinity, alignment: .leading) // Ensure enough space for wrapping
+                    .fixedSize(horizontal: false, vertical: true)
             }
             
             Spacer()
@@ -129,30 +138,46 @@ struct LearnSectionView: View {
         .padding()
         .frame(maxWidth: .infinity, alignment: .leading)
         .background(Color(hex: "DFF7E2"))
-        .cornerRadius(20).offset(y: -30)
+        .cornerRadius(20)
+        .padding(.bottom, 10)
     }
 }
 
 // MARK: - Stay Safe Section View
 struct StaySafeSectionView: View {
+    @EnvironmentObject var loginManager: LoginManager
+    
     var body: some View {
-        VStack(alignment: .leading, spacing: 5) {
+        VStack(alignment: .leading, spacing: 15) {
             Text("Stay Safe")
                 .font(.title2)
                 .fontWeight(.bold)
-                .foregroundColor(.black).offset(x:5)
+                .foregroundColor(.black)
+                .padding(.horizontal, 20)
             
-            Text("Maria, you need to Learn and protect yourself from online threats.")
-                           .font(.system(size: 12))
-                           .foregroundColor(.black)
-                           .multilineTextAlignment(.leading)
-                           .frame(maxWidth: .infinity, alignment: .leading) // Ensure enough space for wrapping
-                           .fixedSize(horizontal: false, vertical: true).offset(x:5)
+            // Display the user's name dynamically
+            if let user = loginManager.currentUser {
+                Text("\(user.fullName), you need to Learn and protect yourself from online threats.")
+                    .font(.system(size: 16))
+                    .foregroundColor(.black)
+                    .multilineTextAlignment(.leading)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .fixedSize(horizontal: false, vertical: true)
+                    .padding(.horizontal, 20)
+            } else {
+                Text("You need to Learn and protect yourself from online threats.")
+                    .font(.system(size: 16))
+                    .foregroundColor(.black)
+                    .multilineTextAlignment(.leading)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .fixedSize(horizontal: false, vertical: true)
+                    .padding(.horizontal, 20)
+            }
             
             // Grid of Buttons
-            LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible())], spacing: 10) {
-                NavigationLink(destination: CheckForScamsPageUI().navigationBarBackButtonHidden(true))
-                    {
+            LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible())], spacing: 15) {
+                // Check For Scams Button
+                NavigationLink(destination: CheckForScamsPageUI().navigationBarBackButtonHidden(true)) {
                     FeatureButtonView(
                         icon: "envelope.fill",
                         title: "Check For Scams",
@@ -161,18 +186,18 @@ struct StaySafeSectionView: View {
                     )
                 }
                 
-                NavigationLink(destination: VerifyCallersPageUI().navigationBarBackButtonHidden(true))
-                    {
+                // Verify Callers Button
+                NavigationLink(destination: VerifyCallersPageUI().navigationBarBackButtonHidden(true)) {
                     FeatureButtonView(
                         icon: "phone.fill",
                         title: "Verify Callers",
-                        description: "Find Out Who’s Calling And Protect Yourself From Phone Scams",
+                        description: "Find Out Who's Calling And Protect Yourself From Phone Scams",
                         color: Color(hex: "A9DFBF")
                     )
                 }
                 
-                NavigationLink(destination: ManagePasswordsPageUI().navigationBarBackButtonHidden(true))
-                               {
+                // Password Vault Button
+                NavigationLink(destination: ManagePasswordsPageUI().navigationBarBackButtonHidden(true)) {
                     FeatureButtonView(
                         icon: "key.fill",
                         title: "Password Vault",
@@ -180,22 +205,14 @@ struct StaySafeSectionView: View {
                         color: Color(hex: "F9E79F")
                     )
                 }
-                
-                NavigationLink(destination: EmergencyAlertsPageUI().navigationBarBackButtonHidden(true)) {
-                    FeatureButtonView(
-                        icon: "exclamationmark.triangle.fill",
-                        title: "Emergency Alerts",
-                        description: "Receive Real-Time Alerts About Major Online Security Threats",
-                        color: Color(hex: "F5B7B1")
-                    )
-                }
-            }.offset(y: 20)
+            }
+            .padding(.horizontal, 15)
+            .padding(.top, 5)
         }
-        .padding(.horizontal, 20).offset(y: -30)
+        .padding(.vertical, 10)
     }
 }
 
-// MARK: - Feature Button View
 struct FeatureButtonView: View {
     let icon: String
     let title: String
@@ -231,6 +248,7 @@ struct FeatureButtonView: View {
         }
         .padding()
         .frame(maxWidth: .infinity, alignment: .center) // Ensure the content is centered
+        .frame(height: 170) // Fixed height for all buttons
         .background(color)
         .cornerRadius(20)
     }
@@ -254,35 +272,51 @@ struct SettingsModalView: View {
                 .padding(.top, 10)
 
             // Change Password Option
-            Button(action: {
-                // Placeholder for change password
-                print("Change Password tapped")
-            }) {
+            NavigationLink(destination: ChangePasswordView().environmentObject(loginManager).navigationBarBackButtonHidden(false)) {
                 HStack {
                     Image(systemName: "key.fill")
                     Text("Change Password")
                         .font(.headline)
                     Spacer()
+                    Image(systemName: "chevron.right")
+                        .foregroundColor(.gray)
                 }
                 .padding()
                 .background(Color(hex: "DFF7E2"))
                 .cornerRadius(10)
+                .foregroundColor(.black)
             }
 
             // Change Profile Picture Option
-            Button(action: {
-                // Placeholder for change profile picture
-                print("Change Profile Picture tapped")
-            }) {
+            NavigationLink(destination: AvatarSelectorView().environmentObject(loginManager).navigationBarBackButtonHidden(false)) {
                 HStack {
                     Image(systemName: "person.crop.circle.fill")
                     Text("Change Profile Picture")
                         .font(.headline)
                     Spacer()
+                    Image(systemName: "chevron.right")
+                        .foregroundColor(.gray)
                 }
                 .padding()
                 .background(Color(hex: "DFF7E2"))
                 .cornerRadius(10)
+                .foregroundColor(.black)
+            }
+            
+            // FAQ Page Option
+            NavigationLink(destination: FAQPageUI().navigationBarBackButtonHidden(false)) {
+                HStack {
+                    Image(systemName: "questionmark.circle.fill")
+                    Text("FAQ")
+                        .font(.headline)
+                    Spacer()
+                    Image(systemName: "chevron.right")
+                        .foregroundColor(.gray)
+                }
+                .padding()
+                .background(Color(hex: "DFF7E2"))
+                .cornerRadius(10)
+                .foregroundColor(.black)
             }
 
             // Logout Option

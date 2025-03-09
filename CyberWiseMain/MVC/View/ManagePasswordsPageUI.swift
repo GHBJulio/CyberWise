@@ -1,219 +1,328 @@
-
 import SwiftUI
 
 struct ManagePasswordsPageUI: View {
-    @EnvironmentObject var loginManager: LoginManager // Shared LoginManager
+    @EnvironmentObject var loginManager: LoginManager
     @StateObject private var passwordManager = PasswordManager()
     
+    // State variables
     @State private var newPasswordTitle: String = ""
     @State private var newPassword: String = ""
     @State private var selectedPassword: PasswordEntry? = nil
     @State private var isUnlockingPassword = false
     @State private var enteredLoginPassword = ""
-    @State private var showError = false
-    @State private var errorMessage: String? = nil // For validation messages
-    @State private var successMessage: String? = nil // For success messages
+    @State private var showPasswordVerification = false
+    @State private var errorMessage: String? = nil
+    @State private var successMessage: String? = nil
+    @State private var decryptedPassword: String? = nil
+    @State private var showAllPasswords = false
+    @State private var isAddingPassword = false
+    @Environment(\.dismiss) private var dismiss
     
-    @State private var navigateToHome = false
-    @State private var showPassword = false // Toggle for showing passwords
-
+    // Constants
+    private let displayLimit = 5
+    private let primaryColor = Color(hex: "6D8FDF")
+    private let secondaryColor = Color(hex: "A9DFBF")
+    private let backgroundColor = Color(hex: "F1FFF3")
+    
     var body: some View {
         NavigationStack {
             ZStack {
-                Color(hex: "F1FFF3").ignoresSafeArea()
+                backgroundColor.ignoresSafeArea()
                 
-                VStack(spacing: 20) {
-                    // Top Section
-                    ZStack {
-                        RoundedRectangle(cornerRadius: 0)
-                            .fill(Color(hex: "6D8FDF"))
-                            .frame(height: 150)
-                            .offset(y: -40)
-                        
-                        HStack {
-                            NavigationLink(destination: HomeScreenUI().navigationBarBackButtonHidden(true), isActive: $navigateToHome) {
-                                EmptyView()
-                            }
-                            
-                            Button(action: {
-                                navigateToHome = true
-                            }) {
-                                Image(systemName: "arrow.left")
-                                    .font(.system(size: 24))
-                                    .foregroundColor(.white)
-                                    .padding(.leading, 20)
-                            }
-                            
-                            Spacer()
-                            
-                            Text("Password Vault")
-                                .font(.title2)
-                                .fontWeight(.bold)
-                                .foregroundColor(.white)
-                            
-                            Spacer()
-                        }
-                    }
-                    .offset(y: -40)
+                VStack(spacing: 0) {
                     
-                    // Password List Section
-                    VStack(spacing: 10) {
-                        Text("Your Saved Passwords")
-                            .font(.headline)
-                            .foregroundColor(.black)
-                        
-                        VStack {
-                            if let user = loginManager.currentUser {
-                                ForEach(passwordManager.passwords.filter { $0.username == user.username }) { entry in
-                                    HStack {
-                                        Image(systemName: "lock.fill")
-                                            .font(.title2)
-                                            .foregroundColor(Color(hex: "6D8FDF"))
-                                        
-                                        VStack(alignment: .leading) {
-                                            Text(entry.title)
-                                                .font(.headline)
-                                                .foregroundColor(.black)
-                                            
-                                            HStack {
-                                                if showPassword {
-                                                    Text(passwordManager.decryptPassword(entry.encryptedPassword) ?? "")
-                                                        .foregroundColor(.gray)
-                                                } else {
-                                                    Text("********")
-                                                        .foregroundColor(.gray)
-                                                }
-                                                
-                                                Button(action: {
-                                                    showPassword.toggle()
-                                                }) {
-                                                    Image(systemName: showPassword ? "eye.slash" : "eye")
-                                                        .foregroundColor(.blue)
-                                                }
-                                            }
-                                        }
-                                        
-                                        Spacer()
-                                        
-                                        Button(action: {
-                                            selectedPassword = entry
-                                            isUnlockingPassword = true
-                                        }) {
-                                            Image(systemName: "pencil")
-                                                .foregroundColor(.blue)
-                                        }
-                                        
-                                        Button(action: {
-                                            passwordManager.deletePassword(entryId: entry.id)
-                                        }) {
-                                            Image(systemName: "trash")
-                                                .foregroundColor(.red)
-                                        }
-                                    }
-                                    .padding()
-                                    .background(Color.white)
-                                    .cornerRadius(15)
-                                    .shadow(radius: 2)
-                                }
-                            }
-                        }
-                    }
-                    .padding(.horizontal)
-                    .offset(y: -20)
+                    StandardLessonHeader(
+                        title: "Password Vault",
+                        isFirstSection: .constant(false), // No section tracking
+                        showExitAlert: false, // Disable exit confirmation
+                        onExitConfirmed: {}, // Not used in general views
+                        onBackPressed: { dismiss() } // Normal back action
+                    ).font(.headline) .fontWeight(.bold) .foregroundColor(Color(hex: "6D8FDF"))
                     
-                    // Add Password Section
-                    VStack(spacing: 10) {
-                        Text("Generate or Save a Password")
-                            .font(.headline)
-                            .foregroundColor(.black)
-                        
-                        TextField("Title", text: $newPasswordTitle)
-                            .padding()
-                            .background(Color(hex: "A9DFBF").opacity(0.3))
-                            .cornerRadius(15)
-                        
-                        TextField("Password", text: $newPassword)
-                            .padding()
-                            .background(Color(hex: "A9DFBF").opacity(0.3))
-                            .cornerRadius(15)
-                        
-                        HStack {
-                            Button("Generate Password") {
-                                newPassword = generatePassword()
-                            }
-                            .frame(maxWidth: .infinity)
-                            .padding()
-                            .background(Color(hex: "6D8FDF"))
-                            .foregroundColor(.white)
-                            .cornerRadius(10)
+                    ScrollView {
+                        VStack(spacing: 24) {
+                            // Password list section
+                            passwordListSection
                             
-                            Button("Save Password") {
-                                if validateInputs(title: newPasswordTitle, password: newPassword) {
-                                    if let user = loginManager.currentUser {
-                                        passwordManager.addPassword(
-                                            title: newPasswordTitle,
-                                            password: newPassword,
-                                            username: user.username
-                                        )
-                                        newPasswordTitle = ""
-                                        newPassword = ""
-                                        successMessage = "Password saved successfully."
-                                    }
-                                }
-                            }
-                            .frame(maxWidth: .infinity)
-                            .padding()
-                            .background(Color.green)
-                            .foregroundColor(.white)
-                            .cornerRadius(10)
+                            // Button to add new password
+                            addPasswordButton
                         }
-
-                        if let errorMessage = errorMessage {
-                            Text(errorMessage)
-                                .foregroundColor(.red)
-                                .font(.footnote)
-                        }
-
-                        if let successMessage = successMessage {
-                            Text(successMessage)
-                                .foregroundColor(.green)
-                                .font(.footnote)
-                        }
+                        .padding(.horizontal)
+                        .padding(.top, 20)
+                        .padding(.bottom, 40)
                     }
-                    .padding(.horizontal)
-                    
-                    Spacer()
                 }
             }
             .onAppear {
                 loadData()
             }
             .sheet(isPresented: $isUnlockingPassword) {
-                if let selectedPassword = selectedPassword, let user = loginManager.currentUser {
+                if let selectedPassword = selectedPassword, let decryptedPassword = decryptedPassword, let user = loginManager.currentUser {
                     EditPasswordView(
                         passwordEntry: selectedPassword,
+                        decryptedPassword: decryptedPassword,
                         passwordManager: passwordManager,
-                        loginPassword: user.password,
                         validateInputs: validateInputs,
                         onSaveSuccess: {
                             isUnlockingPassword = false
-                            successMessage = "Password updated successfully."
                         }
                     )
-                    .id(selectedPassword.id) // Force reinitialization
+                }
+            }
+            .sheet(isPresented: $isAddingPassword) {
+                addPasswordView
+            }
+            .alert("Enter Login Password", isPresented: $showPasswordVerification, actions: {
+                SecureField("Login Password", text: $enteredLoginPassword)
+                Button("Submit") {
+                    validateLoginPassword()
+                }
+                Button("Cancel", role: .cancel) {}
+            }, message: {
+                if let errorMessage = errorMessage {
+                    Text(errorMessage)
+                        .foregroundColor(.red)
+                }
+            })
+        }
+    }
+    
+    // MARK: - Component Views
+    
+    private var passwordListSection: some View {
+        VStack(alignment: .leading, spacing: 16) {
+            HStack {
+                Text("Your Saved Passwords")
+                    .font(.headline)
+                    .foregroundColor(.black)
+                
+                Spacer()
+                
+                if let user = loginManager.currentUser {
+                    let passwordCount = passwordManager.passwords.filter { $0.username == user.username }.count
+                    if passwordCount > displayLimit {
+                        Button(showAllPasswords ? "Show Less" : "Show All") {
+                            withAnimation {
+                                showAllPasswords.toggle()
+                            }
+                        }
+                        .font(.subheadline)
+                        .foregroundColor(primaryColor)
+                    }
+                }
+            }
+            
+            if let user = loginManager.currentUser {
+                let userPasswords = passwordManager.passwords.filter { $0.username == user.username }
+                
+                if userPasswords.isEmpty {
+                    emptyStateView
+                } else {
+                    let displayPasswords = showAllPasswords ? userPasswords : Array(userPasswords.prefix(displayLimit))
+                    
+                    ForEach(displayPasswords) { entry in
+                        passwordCard(for: entry)
+                    }
                 }
             }
         }
     }
     
-    // Function to load data
+    private var emptyStateView: some View {
+        VStack(spacing: 16) {
+            Image(systemName: "lock.shield")
+                .font(.system(size: 50))
+                .foregroundColor(primaryColor.opacity(0.7))
+            
+            Text("No passwords saved yet")
+                .font(.title3)
+                .fontWeight(.medium)
+                .foregroundColor(.gray)
+            
+            Text("Add your first password to keep it secure")
+                .font(.subheadline)
+                .foregroundColor(.gray)
+                .multilineTextAlignment(.center)
+        }
+        .frame(maxWidth: .infinity)
+        .padding(.vertical, 40)
+    }
+    
+    private func passwordCard(for entry: PasswordEntry) -> some View {
+        HStack {
+            VStack(alignment: .leading, spacing: 4) {
+                Text(entry.title)
+                    .font(.headline)
+                    .foregroundColor(.black)
+                
+                Text("••••••••••••")
+                    .font(.subheadline)
+                    .foregroundColor(.gray)
+            }
+            
+            Spacer()
+            
+            HStack(spacing: 16) {
+                Button(action: {
+                    selectedPassword = entry
+                    showPasswordVerification = true
+                }) {
+                    Image(systemName: "eye.fill")
+                        .foregroundColor(primaryColor)
+                }
+                
+                Button(action: {
+                    passwordManager.deletePassword(entryId: entry.id)
+                }) {
+                    Image(systemName: "trash")
+                        .foregroundColor(.red.opacity(0.8))
+                }
+            }
+        }
+        .padding()
+        .background(
+            RoundedRectangle(cornerRadius: 12)
+                .fill(Color.white)
+                .shadow(color: Color.black.opacity(0.08), radius: 4, x: 0, y: 2)
+        )
+        .transition(.opacity)
+    }
+    
+    private var addPasswordButton: some View {
+        Button(action: {
+            isAddingPassword = true
+        }) {
+            HStack {
+                Image(systemName: "plus.circle.fill")
+                    .font(.headline)
+                
+                Text("Add New Password")
+                    .fontWeight(.medium)
+            }
+            .foregroundColor(.white)
+            .frame(maxWidth: .infinity)
+            .padding()
+            .background(
+                RoundedRectangle(cornerRadius: 12)
+                    .fill(primaryColor)
+            )
+        }
+    }
+    
+    private var addPasswordView: some View {
+        VStack(spacing: 24) {
+            // Header
+            HStack {
+                Text("Add New Password")
+                    .font(.title2)
+                    .fontWeight(.bold)
+                
+                Spacer()
+                
+                Button(action: {
+                    isAddingPassword = false
+                }) {
+                    Image(systemName: "xmark.circle.fill")
+                        .font(.title3)
+                        .foregroundColor(.gray)
+                }
+            }
+            .padding(.bottom)
+            
+            // Form fields
+            VStack(spacing: 16) {
+                VStack(alignment: .leading, spacing: 8) {
+                    Text("Title")
+                        .font(.subheadline)
+                        .foregroundColor(.gray)
+                    
+                    TextField("e.g., Email Account", text: $newPasswordTitle)
+                        .padding()
+                        .background(Color.gray.opacity(0.1))
+                        .cornerRadius(10)
+                }
+                
+                VStack(alignment: .leading, spacing: 8) {
+                    Text("Password")
+                        .font(.subheadline)
+                        .foregroundColor(.gray)
+                    
+                    TextField("Enter password", text: $newPassword)
+                        .padding()
+                        .background(Color.gray.opacity(0.1))
+                        .cornerRadius(10)
+                }
+                
+                Button("Generate Strong Password") {
+                    newPassword = generatePassword()
+                }
+                .font(.subheadline)
+                .foregroundColor(primaryColor)
+                .padding(.top, 4)
+            }
+            
+            // Messages
+            if let errorMessage = errorMessage {
+                Text(errorMessage)
+                    .foregroundColor(.red)
+                    .font(.footnote)
+                    .padding(.top, 8)
+            }
+            
+            if let successMessage = successMessage {
+                Text(successMessage)
+                    .foregroundColor(.green)
+                    .font(.footnote)
+                    .padding(.top, 8)
+            }
+            
+            Spacer()
+            
+            // Save button
+            Button(action: {
+                if validateInputs(title: newPasswordTitle, password: newPassword) {
+                    if let user = loginManager.currentUser {
+                        passwordManager.addPassword(
+                            title: newPasswordTitle,
+                            password: newPassword,
+                            username: user.username
+                        )
+                        newPasswordTitle = ""
+                        newPassword = ""
+                        successMessage = "Password saved successfully."
+                        
+                        // Close the sheet after a short delay
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
+                            isAddingPassword = false
+                        }
+                    }
+                }
+            }) {
+                Text("Save Password")
+                    .fontWeight(.medium)
+                    .foregroundColor(.white)
+                    .frame(maxWidth: .infinity)
+                    .padding()
+                    .background(
+                        RoundedRectangle(cornerRadius: 12)
+                            .fill(primaryColor)
+                    )
+            }
+            .disabled(newPasswordTitle.isEmpty || newPassword.isEmpty)
+            .opacity(newPasswordTitle.isEmpty || newPassword.isEmpty ? 0.7 : 1)
+        }
+        .padding()
+        .background(backgroundColor)
+    }
+    
+    // MARK: - Helper Functions
+    
     func loadData() {
         if let user = loginManager.currentUser {
             passwordManager.loadPasswords()
         }
     }
     
-    // Validate Title and Password
     func validateInputs(title: String, password: String) -> Bool {
         if title.count < 3 {
             errorMessage = "Title must be at least 3 characters long."
@@ -227,57 +336,153 @@ struct ManagePasswordsPageUI: View {
         return true
     }
     
-    // Generate Random Password
     func generatePassword() -> String {
-        let characters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*"
-        return String((0..<12).map { _ in characters.randomElement()! })
+        let lowercase = "abcdefghijklmnopqrstuvwxyz"
+        let uppercase = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+        let numbers = "0123456789"
+        let symbols = "!@#$%^&*"
+        
+        let allChars = lowercase + uppercase + numbers + symbols
+        var password = ""
+        
+        // Ensure at least one character from each category
+        password += String(lowercase.randomElement()!)
+        password += String(uppercase.randomElement()!)
+        password += String(numbers.randomElement()!)
+        password += String(symbols.randomElement()!)
+        
+        // Fill the rest with random characters
+        for _ in 0..<8 {
+            password += String(allChars.randomElement()!)
+        }
+        
+        // Shuffle the password to avoid predictable pattern
+        return String(password.shuffled())
+    }
+    
+    func validateLoginPassword() {
+        if let user = loginManager.currentUser, enteredLoginPassword == user.password {
+            if let selectedPassword = selectedPassword {
+                decryptedPassword = passwordManager.decryptPassword(selectedPassword.encryptedPassword)
+                isUnlockingPassword = true
+            }
+            enteredLoginPassword = ""
+            errorMessage = nil
+        } else {
+            errorMessage = "Incorrect password. Please try again."
+        }
     }
 }
 
 struct EditPasswordView: View {
     var passwordEntry: PasswordEntry
+    var decryptedPassword: String
     @ObservedObject var passwordManager: PasswordManager
-    let loginPassword: String
     let validateInputs: (String, String) -> Bool
     let onSaveSuccess: () -> Void
     
     @State private var newTitle: String = ""
     @State private var newPassword: String = ""
-    @State private var enteredLoginPassword: String = ""
-    @State private var showError: Bool = false
     @State private var errorMessage: String? = nil
+    @State private var isPasswordVisible = false
+    
+    private let primaryColor = Color(hex: "6D8FDF")
+    private let secondaryColor = Color(hex: "A9DFBF")
+    private let backgroundColor = Color(hex: "F1FFF3")
 
     var body: some View {
-        VStack(spacing: 20) {
-            Text("Edit Account: \(passwordEntry.title)")
-                .font(.title2)
-                .fontWeight(.bold)
+        VStack(spacing: 24) {
+            // Header
+            HStack {
+                Text("Edit Password")
+                    .font(.title2)
+                    .fontWeight(.bold)
+                
+                Spacer()
+                
+                Button(action: {
+                    onSaveSuccess()
+                }) {
+                    Image(systemName: "xmark.circle.fill")
+                        .font(.title3)
+                        .foregroundColor(.gray)
+                }
+            }
+            
+            // Current password display
+            VStack(alignment: .leading, spacing: 8) {
+                Text("Current Password")
+                    .font(.subheadline)
+                    .foregroundColor(.gray)
+                
+                HStack {
+                    if isPasswordVisible {
+                        Text(decryptedPassword)
+                            .font(.system(.body, design: .monospaced))
+                    } else {
+                        Text(String(repeating: "•", count: decryptedPassword.count))
+                    }
+                    
+                    Spacer()
+                    
+                    Button(action: {
+                        isPasswordVisible.toggle()
+                    }) {
+                        Image(systemName: isPasswordVisible ? "eye.slash" : "eye")
+                            .foregroundColor(primaryColor)
+                    }
+                }
                 .padding()
-
-            SecureField("Enter Login Password", text: $enteredLoginPassword)
-                .padding()
-                .background(Color(hex: "A9DFBF").opacity(0.3))
-                .cornerRadius(15)
-
-            TextField("New Title", text: $newTitle)
-                .padding()
-                .background(Color(hex: "A9DFBF").opacity(0.3))
-                .cornerRadius(15)
-
-            SecureField("New Password", text: $newPassword)
-                .padding()
-                .background(Color(hex: "A9DFBF").opacity(0.3))
-                .cornerRadius(15)
-
+                .background(Color.gray.opacity(0.1))
+                .cornerRadius(10)
+            }
+            
+            // Form fields
+            VStack(spacing: 16) {
+                VStack(alignment: .leading, spacing: 8) {
+                    Text("New Title (Optional)")
+                        .font(.subheadline)
+                        .foregroundColor(.gray)
+                    
+                    TextField("Keep current: \(passwordEntry.title)", text: $newTitle)
+                        .padding()
+                        .background(Color.gray.opacity(0.1))
+                        .cornerRadius(10)
+                }
+                
+                VStack(alignment: .leading, spacing: 8) {
+                    Text("New Password (Optional)")
+                        .font(.subheadline)
+                        .foregroundColor(.gray)
+                    
+                    SecureField("Enter new password", text: $newPassword)
+                        .padding()
+                        .background(Color.gray.opacity(0.1))
+                        .cornerRadius(10)
+                }
+            }
+            
             if let errorMessage = errorMessage {
                 Text(errorMessage)
                     .foregroundColor(.red)
                     .font(.footnote)
             }
-
-            Button("Save Changes") {
-                if enteredLoginPassword == loginPassword {
-                    if validateInputs(newTitle.isEmpty ? passwordEntry.title : newTitle, newPassword) {
+            
+            Spacer()
+            
+            // Button row
+            HStack(spacing: 16) {
+                Button("Cancel") {
+                    onSaveSuccess()
+                }
+                .foregroundColor(primaryColor)
+                .frame(maxWidth: .infinity)
+                .padding()
+                .background(Color.gray.opacity(0.1))
+                .cornerRadius(12)
+                
+                Button("Save Changes") {
+                    if newPassword.isEmpty || validateInputs(newTitle.isEmpty ? passwordEntry.title : newTitle, newPassword) {
                         passwordManager.updatePasswordEntry(
                             entryId: passwordEntry.id,
                             newTitle: newTitle.isEmpty ? passwordEntry.title : newTitle,
@@ -287,33 +492,20 @@ struct EditPasswordView: View {
                     } else {
                         errorMessage = "Validation failed."
                     }
-                } else {
-                    showError = true
-                    errorMessage = "Incorrect Login Password."
                 }
+                .foregroundColor(.white)
+                .frame(maxWidth: .infinity)
+                .padding()
+                .background(primaryColor)
+                .cornerRadius(12)
             }
-            .padding()
-            .frame(maxWidth: .infinity)
-            .background(Color(hex: "6D8FDF"))
-            .foregroundColor(.white)
-            .cornerRadius(10)
-
-            Button("Cancel") {
-                onSaveSuccess() // Just dismiss
-            }
-            .padding()
-            .frame(maxWidth: .infinity)
-            .background(Color.gray)
-            .foregroundColor(.white)
-            .cornerRadius(10)
         }
         .padding()
-        .background(Color(hex: "F1FFF3"))
-        .cornerRadius(15)
-        .shadow(radius: 5)
+        .background(backgroundColor)
     }
 }
 
+// Preview
 #Preview {
     ManagePasswordsPageUI().environmentObject(LoginManager())
 }

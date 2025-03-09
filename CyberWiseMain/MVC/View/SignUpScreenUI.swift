@@ -1,20 +1,17 @@
-//
-//  SignUpScreenUI.swift
-//  CyberWiseMain
-//
-//  Created by GUILHERME JULIO on 19/12/2024.
-//
-
 import SwiftUI
 
 struct SignUpScreenUI: View {
+    @EnvironmentObject var loginManager: LoginManager
     
+    @State private var username = ""
     @State private var fullName = ""
     @State private var email = ""
     @State private var mobileNumber = ""
     @State private var dateOfBirth = ""
     @State private var password = ""
     @State private var confirmPassword = ""
+    @State private var showAlert = false
+    @State private var alertMessage = ""
     
     var body: some View {
         NavigationView {
@@ -41,8 +38,12 @@ struct SignUpScreenUI: View {
                     // Form fields
                     VStack(spacing: 10) {
                         Spacer()
+                        
+                        // Username Field
+                        fieldWithLabel(label: "Username", placeholder: "Create a username", text: $username)
+                        
                         // Full Name Field
-                        fieldWithLabel(label: "Full Name", placeholder: "example@example.com", text: $fullName)
+                        fieldWithLabel(label: "Full Name", placeholder: "Enter your full name", text: $fullName)
                         
                         // Email Field
                         fieldWithLabel(label: "Email", placeholder: "example@example.com", text: $email)
@@ -106,7 +107,7 @@ struct SignUpScreenUI: View {
                     
                     // Sign Up Button
                     Button(action: {
-                        // Sign up action
+                        handleSignUp()
                     }, label: {
                         Text("Sign Up")
                             .foregroundColor(.white)
@@ -121,7 +122,7 @@ struct SignUpScreenUI: View {
                         Text("Already have an account?")
                             .font(.system(size: 14))
                             .foregroundColor(.black)
-                        NavigationLink(destination: LoginScreenUI().environmentObject(LoginManager()).navigationBarBackButtonHidden(true)) {
+                        NavigationLink(destination: LoginScreenUI().environmentObject(loginManager).navigationBarBackButtonHidden(true)) {
                             Text("Log In")
                                 .font(.system(size: 14))
                                 .foregroundColor(Color(hex: "6D8FDF"))
@@ -133,6 +134,13 @@ struct SignUpScreenUI: View {
                 }
                 .padding(.horizontal, 20)
                 .padding(.bottom, 0)
+                .alert(isPresented: $showAlert) {
+                    Alert(
+                        title: Text("Registration"),
+                        message: Text(alertMessage),
+                        dismissButton: .default(Text("OK"))
+                    )
+                }
             }
         }
     }
@@ -164,9 +172,44 @@ struct SignUpScreenUI: View {
                 .cornerRadius(20)
         }
     }
+    
+    // Handle sign up logic
+    private func handleSignUp() {
+        // Validate passwords match
+        if password != confirmPassword {
+            alertMessage = "Passwords do not match."
+            showAlert = true
+            return
+        }
+        
+        // Validate fields are not empty
+        if username.isEmpty || fullName.isEmpty || email.isEmpty || password.isEmpty {
+            alertMessage = "Please fill in all required fields."
+            showAlert = true
+            return
+        }
+        
+        // Attempt registration
+        let success = loginManager.register(
+            username: username,
+            password: password,
+            fullName: fullName,
+            email: email,
+            phoneNumber: mobileNumber,
+            dob: dateOfBirth
+        )
+        
+        if success {
+            // Registration successful - handled by loginManager which automatically logs in
+        } else {
+            // Registration failed - show error message from loginManager
+            alertMessage = loginManager.errorMessage ?? "Registration failed."
+            showAlert = true
+        }
+    }
 }
 
 #Preview {
     SignUpScreenUI()
+        .environmentObject(LoginManager())
 }
-

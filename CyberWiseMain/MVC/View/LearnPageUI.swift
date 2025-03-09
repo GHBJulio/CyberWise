@@ -2,6 +2,8 @@ import SwiftUI
 
 struct LearnPageUI: View {
     @EnvironmentObject var loginManager: LoginManager
+    @State private var navigateToHub: Bool = false    // Controls navigation to
+    @Environment(\.dismiss) var dismiss
     var body: some View {
         NavigationStack {
             ZStack {
@@ -12,50 +14,23 @@ struct LearnPageUI: View {
                 VStack(spacing: 10) {
                     // Top Section
                     ZStack {
-                        RoundedRectangle(cornerRadius: 0)
-                            .fill(Color(hex: "6D8FDF"))
-                            .frame(height: 150).offset(y:-40)
-                        
-                        HStack {
-                            NavigationLink(destination: HomeScreenUI().navigationBarBackButtonHidden(true)) {
-                                // Back Button
-                                Image(systemName: "arrow.left")
-                                    .font(.system(size: 24))
-                                    .foregroundColor(.white)
-                                    .padding(.leading, 20)
-                            }
-                        
-                            
-                            Spacer()
-                            
-                            Text("Learn")
-                                .font(.title)
-                                .fontWeight(.bold)
-                                .foregroundColor(.white)
-                            
-                            Spacer()
-                            
-                            Button(action: {
-                                // Notifications action
-                            }) {
-                                // Notification Bell Icon
-                                Image(systemName: "bell")
-                                    .font(.system(size: 24))
-                                    .foregroundColor(.white)
-                                    .padding(.trailing, 20)
-                            }
-                        
-                        }
-                    }.offset(y:-10)
+                        StandardLessonHeader(
+                            title: "Learn",
+                            isFirstSection: .constant(false), // No section tracking needed
+                            showExitAlert: false, // Disable exit confirmation
+                            onExitConfirmed: {}, // Not used in general views
+                            onBackPressed: { navigateToHub = true } // Normal back action
+                        ).font(.headline) .fontWeight(.bold) .foregroundColor(Color(hex: "6D8FDF"))
+                    }
                     
-                     
                     VStack {
                         Text("Stay Safe Practice")
                             .font(.title)
                             .fontWeight(.bold)
                             .foregroundColor(.black)
-                            .shadow(radius: 5).offset(y:-40)
+                            .shadow(radius: 5).offset(y: -10)
                     }
+                    
                     HStack {
                         VStack(alignment: .leading, spacing: 4) {
                             Text("Tip of the Day")
@@ -84,7 +59,7 @@ struct LearnPageUI: View {
                     )
                     .cornerRadius(20)
                     .shadow(radius: 2)
-                    .padding(.horizontal).offset(y:-40)
+                    .padding(.horizontal).offset(y:0)
 
                     
 
@@ -99,7 +74,7 @@ struct LearnPageUI: View {
                                     image: "checkWebsiteImage", // Replace with your asset name
                                     title: "Browse Safe",
                                     description: "Learn How To Identify Safe And Trustworthy Websites.",
-                                    progress: "\(checkWebsiteProgress)/5")
+                                    progress: "\(checkWebsiteProgress)/3")
                             }
                             
                             NavigationLink(destination: LearningHubUI(topic: "Avoid Phishing")) {
@@ -108,7 +83,7 @@ struct LearnPageUI: View {
                                     image: "avoidPhishingImage", // Replace with your asset name
                                     title: "Avoid Phishing",
                                     description: "Understand How To Spot Fake Emails And Links.",
-                                    progress: "\(avoidPhisingProgress)/5"
+                                    progress: "\(avoidPhisingProgress)/3"
                                 )
                             }
                         }
@@ -120,11 +95,14 @@ struct LearnPageUI: View {
                                 image: "avoidScamsImage", // Replace with your asset name
                                 title: "Avoid Scams",
                                 description: "Recognize Common Scams To Keep Your Information Safe.",
-                                progress: "\(avoidScamsProgress)/5"
+                                progress: "\(avoidScamsProgress)/3"
                             )
                         }
-                    }
-                    .padding(.horizontal).offset(y:-30)
+                    }.background(
+                        NavigationLink("", destination: HomeScreenUI().navigationBarBackButtonHidden(true),isActive: $navigateToHub)
+                    )
+                    .navigationBarHidden(true)
+                    .padding(.horizontal).offset(y:10)
                     
                     Spacer()
                 }

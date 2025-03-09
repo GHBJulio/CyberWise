@@ -26,15 +26,28 @@
 		1155EF602CF8E16E007EE3EB /* CyberWiseMainTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1155EF5F2CF8E16E007EE3EB /* CyberWiseMainTests.swift */; };
 		1155EF6A2CF8E16E007EE3EB /* CyberWiseMainUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1155EF692CF8E16E007EE3EB /* CyberWiseMainUITests.swift */; };
 		1155EF6C2CF8E16E007EE3EB /* CyberWiseMainUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1155EF6B2CF8E16E007EE3EB /* CyberWiseMainUITestsLaunchTests.swift */; };
+		119B413F2D7DB45100D11C8D /* FraudReportingAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 119B413E2D7DB45100D11C8D /* FraudReportingAPI.swift */; };
+		119B41412D7DB7B500D11C8D /* FAQPageUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 119B41402D7DB7B500D11C8D /* FAQPageUI.swift */; };
+		119B41452D7DB83000D11C8D /* ChangePasswordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 119B41442D7DB83000D11C8D /* ChangePasswordView.swift */; };
+		119B41472D7DB89100D11C8D /* AvatarSelectorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 119B41462D7DB89100D11C8D /* AvatarSelectorView.swift */; };
 		11A6BD0F2D38169700DE6FF4 /* LearningHubUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11A6BD0E2D38169700DE6FF4 /* LearningHubUI.swift */; };
 		11A6BD132D3816BF00DE6FF4 /* LearnPageUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11A6BD122D3816BF00DE6FF4 /* LearnPageUI.swift */; };
 		11B22FDC2D0326B100B05BDC /* Account.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B22FDB2D0326B100B05BDC /* Account.swift */; };
 		11B8FA172D38144D00A0A146 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B22FE02D0337BA00B05BDC /* LoginView.swift */; };
+		11C8CE5E2D65CC07003A7B81 /* Lesson1BrowseSafeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11C8CE5D2D65CC07003A7B81 /* Lesson1BrowseSafeView.swift */; };
 		11CD898C2D32BA0600891BAD /* HomeScreenUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11CD898B2D32BA0600891BAD /* HomeScreenUI.swift */; };
 		11CD89902D32C46A00891BAD /* EmergencyAlertsPageUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11CD898F2D32C46A00891BAD /* EmergencyAlertsPageUI.swift */; };
 		11CD89922D32C47F00891BAD /* ManagePasswordsPageUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11CD89912D32C47F00891BAD /* ManagePasswordsPageUI.swift */; };
 		11CD89942D32C48E00891BAD /* VerifyCallersPageUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11CD89932D32C48E00891BAD /* VerifyCallersPageUI.swift */; };
 		11CD89962D32C49B00891BAD /* CheckForScamsPageUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11CD89952D32C49B00891BAD /* CheckForScamsPageUI.swift */; };
+		11DCBBF22D6F4F58008AE0B2 /* Lesson2BrowseSafeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11DCBBF12D6F4F58008AE0B2 /* Lesson2BrowseSafeView.swift */; };
+		11EEED422D71F62100B08776 /* Lesson3BrowseSafeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11EEED412D71F62100B08776 /* Lesson3BrowseSafeView.swift */; };
+		11EEED442D737DB100B08776 /* Lesson1AvoidPhishingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11EEED432D737DB100B08776 /* Lesson1AvoidPhishingView.swift */; };
+		11EEED462D7387D300B08776 /* Lesson2AvoidPhishingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11EEED452D7387D300B08776 /* Lesson2AvoidPhishingView.swift */; };
+		11EEED482D738F7E00B08776 /* Lesson3AvoidPhishingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11EEED472D738F7E00B08776 /* Lesson3AvoidPhishingView.swift */; };
+		11EEED4A2D73BEA900B08776 /* Lesson1AvoidScamsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11EEED492D73BEA900B08776 /* Lesson1AvoidScamsView.swift */; };
+		11EEED4C2D74EFE700B08776 /* Lesson2AvoidScamsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11EEED4B2D74EFE700B08776 /* Lesson2AvoidScamsView.swift */; };
+		11EEED4E2D74F41A00B08776 /* Lesson3AvoidScamsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11EEED4D2D74F41A00B08776 /* Lesson3AvoidScamsView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -77,15 +90,28 @@
 		1155EF652CF8E16E007EE3EB /* CyberWiseMainUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CyberWiseMainUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		1155EF692CF8E16E007EE3EB /* CyberWiseMainUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CyberWiseMainUITests.swift; sourceTree = "<group>"; };
 		1155EF6B2CF8E16E007EE3EB /* CyberWiseMainUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CyberWiseMainUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		119B413E2D7DB45100D11C8D /* FraudReportingAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FraudReportingAPI.swift; sourceTree = "<group>"; };
+		119B41402D7DB7B500D11C8D /* FAQPageUI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FAQPageUI.swift; sourceTree = "<group>"; };
+		119B41442D7DB83000D11C8D /* ChangePasswordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangePasswordView.swift; sourceTree = "<group>"; };
+		119B41462D7DB89100D11C8D /* AvatarSelectorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AvatarSelectorView.swift; sourceTree = "<group>"; };
 		11A6BD0E2D38169700DE6FF4 /* LearningHubUI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LearningHubUI.swift; sourceTree = "<group>"; };
 		11A6BD122D3816BF00DE6FF4 /* LearnPageUI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LearnPageUI.swift; sourceTree = "<group>"; };
 		11B22FDB2D0326B100B05BDC /* Account.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Account.swift; sourceTree = "<group>"; };
 		11B22FE02D0337BA00B05BDC /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
+		11C8CE5D2D65CC07003A7B81 /* Lesson1BrowseSafeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Lesson1BrowseSafeView.swift; sourceTree = "<group>"; };
 		11CD898B2D32BA0600891BAD /* HomeScreenUI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeScreenUI.swift; sourceTree = "<group>"; };
 		11CD898F2D32C46A00891BAD /* EmergencyAlertsPageUI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmergencyAlertsPageUI.swift; sourceTree = "<group>"; };
 		11CD89912D32C47F00891BAD /* ManagePasswordsPageUI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManagePasswordsPageUI.swift; sourceTree = "<group>"; };
 		11CD89932D32C48E00891BAD /* VerifyCallersPageUI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerifyCallersPageUI.swift; sourceTree = "<group>"; };
 		11CD89952D32C49B00891BAD /* CheckForScamsPageUI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckForScamsPageUI.swift; sourceTree = "<group>"; };
+		11DCBBF12D6F4F58008AE0B2 /* Lesson2BrowseSafeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Lesson2BrowseSafeView.swift; sourceTree = "<group>"; };
+		11EEED412D71F62100B08776 /* Lesson3BrowseSafeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Lesson3BrowseSafeView.swift; sourceTree = "<group>"; };
+		11EEED432D737DB100B08776 /* Lesson1AvoidPhishingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Lesson1AvoidPhishingView.swift; sourceTree = "<group>"; };
+		11EEED452D7387D300B08776 /* Lesson2AvoidPhishingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Lesson2AvoidPhishingView.swift; sourceTree = "<group>"; };
+		11EEED472D738F7E00B08776 /* Lesson3AvoidPhishingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Lesson3AvoidPhishingView.swift; sourceTree = "<group>"; };
+		11EEED492D73BEA900B08776 /* Lesson1AvoidScamsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Lesson1AvoidScamsView.swift; sourceTree = "<group>"; };
+		11EEED4B2D74EFE700B08776 /* Lesson2AvoidScamsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Lesson2AvoidScamsView.swift; sourceTree = "<group>"; };
+		11EEED4D2D74F41A00B08776 /* Lesson3AvoidScamsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Lesson3AvoidScamsView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -184,6 +210,7 @@
 		11B22FDD2D0327CB00B05BDC /* View */ = {
 			isa = PBXGroup;
 			children = (
+				11C8CE5C2D65CBF1003A7B81 /* LessonsUI */,
 				11B22FE02D0337BA00B05BDC /* LoginView.swift */,
 				113C78182D147C5D00F5C0B6 /* LoginScreenUI.swift */,
 				113C781A2D14C4F300F5C0B6 /* SignUpScreenUI.swift */,
@@ -196,6 +223,9 @@
 				11CD89952D32C49B00891BAD /* CheckForScamsPageUI.swift */,
 				11A6BD0E2D38169700DE6FF4 /* LearningHubUI.swift */,
 				11A6BD122D3816BF00DE6FF4 /* LearnPageUI.swift */,
+				119B41402D7DB7B500D11C8D /* FAQPageUI.swift */,
+				119B41442D7DB83000D11C8D /* ChangePasswordView.swift */,
+				119B41462D7DB89100D11C8D /* AvatarSelectorView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -210,6 +240,7 @@
 				113C057A2D3D3D7700759A78 /* Country.swift */,
 				113C057C2D3D446500759A78 /* EncryptionHelper.swift */,
 				113C057E2D3D448500759A78 /* PasswordManager.swift */,
+				119B413E2D7DB45100D11C8D /* FraudReportingAPI.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -220,6 +251,22 @@
 				11B22FDB2D0326B100B05BDC /* Account.swift */,
 			);
 			path = Model;
+			sourceTree = "<group>";
+		};
+		11C8CE5C2D65CBF1003A7B81 /* LessonsUI */ = {
+			isa = PBXGroup;
+			children = (
+				11C8CE5D2D65CC07003A7B81 /* Lesson1BrowseSafeView.swift */,
+				11DCBBF12D6F4F58008AE0B2 /* Lesson2BrowseSafeView.swift */,
+				11EEED412D71F62100B08776 /* Lesson3BrowseSafeView.swift */,
+				11EEED432D737DB100B08776 /* Lesson1AvoidPhishingView.swift */,
+				11EEED452D7387D300B08776 /* Lesson2AvoidPhishingView.swift */,
+				11EEED472D738F7E00B08776 /* Lesson3AvoidPhishingView.swift */,
+				11EEED492D73BEA900B08776 /* Lesson1AvoidScamsView.swift */,
+				11EEED4B2D74EFE700B08776 /* Lesson2AvoidScamsView.swift */,
+				11EEED4D2D74F41A00B08776 /* Lesson3AvoidScamsView.swift */,
+			);
+			path = LessonsUI;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -354,27 +401,40 @@
 			files = (
 				113C781B2D14C4F300F5C0B6 /* SignUpScreenUI.swift in Sources */,
 				11A6BD132D3816BF00DE6FF4 /* LearnPageUI.swift in Sources */,
+				11EEED4E2D74F41A00B08776 /* Lesson3AvoidScamsView.swift in Sources */,
 				113C781D2D15A40C00F5C0B6 /* FirstOnBoardingScreenUI.swift in Sources */,
 				1155EF4F2CF8E16D007EE3EB /* ContentView.swift in Sources */,
 				11A6BD0F2D38169700DE6FF4 /* LearningHubUI.swift in Sources */,
 				11CD89962D32C49B00891BAD /* CheckForScamsPageUI.swift in Sources */,
+				11DCBBF22D6F4F58008AE0B2 /* Lesson2BrowseSafeView.swift in Sources */,
 				11CD89942D32C48E00891BAD /* VerifyCallersPageUI.swift in Sources */,
+				11C8CE5E2D65CC07003A7B81 /* Lesson1BrowseSafeView.swift in Sources */,
+				119B41472D7DB89100D11C8D /* AvatarSelectorView.swift in Sources */,
+				11EEED4C2D74EFE700B08776 /* Lesson2AvoidScamsView.swift in Sources */,
 				113C057B2D3D3D7700759A78 /* Country.swift in Sources */,
 				113C78212D15EE5500F5C0B6 /* LoginManager.swift in Sources */,
+				11EEED442D737DB100B08776 /* Lesson1AvoidPhishingView.swift in Sources */,
 				11CD898C2D32BA0600891BAD /* HomeScreenUI.swift in Sources */,
+				119B41412D7DB7B500D11C8D /* FAQPageUI.swift in Sources */,
 				113C057F2D3D448500759A78 /* PasswordManager.swift in Sources */,
+				11EEED4A2D73BEA900B08776 /* Lesson1AvoidScamsView.swift in Sources */,
 				113C057D2D3D446500759A78 /* EncryptionHelper.swift in Sources */,
+				11EEED462D7387D300B08776 /* Lesson2AvoidPhishingView.swift in Sources */,
 				11CD89922D32C47F00891BAD /* ManagePasswordsPageUI.swift in Sources */,
 				1155EF512CF8E16D007EE3EB /* Item.swift in Sources */,
+				119B41452D7DB83000D11C8D /* ChangePasswordView.swift in Sources */,
 				113C056F2D39642E00759A78 /* MaliciousURLAPI.swift in Sources */,
 				11B8FA172D38144D00A0A146 /* LoginView.swift in Sources */,
 				1155EF4D2CF8E16D007EE3EB /* CyberWiseMainApp.swift in Sources */,
 				11CD89902D32C46A00891BAD /* EmergencyAlertsPageUI.swift in Sources */,
+				119B413F2D7DB45100D11C8D /* FraudReportingAPI.swift in Sources */,
 				11B22FDC2D0326B100B05BDC /* Account.swift in Sources */,
 				113C05712D39971200759A78 /* emailValidatorAPI.swift in Sources */,
 				113C78192D147C5D00F5C0B6 /* LoginScreenUI.swift in Sources */,
 				113C05732D39A72400759A78 /* phoneValidationAPI.swift in Sources */,
 				113C781F2D15AD0E00F5C0B6 /* SecondOnBoardingScreenUI.swift in Sources */,
+				11EEED422D71F62100B08776 /* Lesson3BrowseSafeView.swift in Sources */,
+				11EEED482D738F7E00B08776 /* Lesson3AvoidPhishingView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
