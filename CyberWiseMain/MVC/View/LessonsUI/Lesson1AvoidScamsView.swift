@@ -112,7 +112,7 @@ never provide gift-card payments to strangers.
                     if isAnswerCorrect {
                         // Mark lesson as completed (session = 1 for "Avoid Scams")
                         let currentProgress = loginManager.getProgress(for: "Avoid Scams")
-                        if currentProgress < 1 {
+                        if currentProgress <= 1 {
                             loginManager.updateProgress(for: "Avoid Scams", session: 2)
                         }
                         navigateToHub = true
@@ -122,11 +122,7 @@ never provide gift-card payments to strangers.
                 Text(feedbackMessage)
             }.background(
                 NavigationLink("", destination: LearnPageUI().navigationBarBackButtonHidden(true).environmentObject(loginManager), isActive: $navigateToHub)
-                )
-            .background(
-                NavigationLink("", destination: LearnPageUI().navigationBarBackButtonHidden(true).environmentObject(loginManager), isActive: $navigateToHub)
-                    .navigationBarBackButtonHidden(true)
-            )
+                ).navigationBarBackButtonHidden(true)
         }
     }
 }

@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1126147E2D8AF1BE00E54D01 /* LockScreenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1126147D2D8AF1BE00E54D01 /* LockScreenView.swift */; };
 		113C056F2D39642E00759A78 /* MaliciousURLAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 113C056E2D39642E00759A78 /* MaliciousURLAPI.swift */; };
 		113C05712D39971200759A78 /* emailValidatorAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 113C05702D39971200759A78 /* emailValidatorAPI.swift */; };
 		113C05732D39A72400759A78 /* phoneValidationAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 113C05722D39A72400759A78 /* phoneValidationAPI.swift */; };
@@ -68,6 +69,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		1126147D2D8AF1BE00E54D01 /* LockScreenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LockScreenView.swift; sourceTree = "<group>"; };
+		112614812D8AF8CF00E54D01 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		113C056E2D39642E00759A78 /* MaliciousURLAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MaliciousURLAPI.swift; sourceTree = "<group>"; };
 		113C05702D39971200759A78 /* emailValidatorAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = emailValidatorAPI.swift; sourceTree = "<group>"; };
 		113C05722D39A72400759A78 /* phoneValidationAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = phoneValidationAPI.swift; sourceTree = "<group>"; };
@@ -162,6 +165,7 @@
 		1155EF4B2CF8E16D007EE3EB /* CyberWiseMain */ = {
 			isa = PBXGroup;
 			children = (
+				112614812D8AF8CF00E54D01 /* Info.plist */,
 				11B22FD62D03249300B05BDC /* MVC */,
 				1155EF4C2CF8E16D007EE3EB /* CyberWiseMainApp.swift */,
 				1155EF4E2CF8E16D007EE3EB /* ContentView.swift */,
@@ -226,6 +230,7 @@
 				119B41402D7DB7B500D11C8D /* FAQPageUI.swift */,
 				119B41442D7DB83000D11C8D /* ChangePasswordView.swift */,
 				119B41462D7DB89100D11C8D /* AvatarSelectorView.swift */,
+				1126147D2D8AF1BE00E54D01 /* LockScreenView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -400,6 +405,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				113C781B2D14C4F300F5C0B6 /* SignUpScreenUI.swift in Sources */,
+				1126147E2D8AF1BE00E54D01 /* LockScreenView.swift in Sources */,
 				11A6BD132D3816BF00DE6FF4 /* LearnPageUI.swift in Sources */,
 				11EEED4E2D74F41A00B08776 /* Lesson3AvoidScamsView.swift in Sources */,
 				113C781D2D15A40C00F5C0B6 /* FirstOnBoardingScreenUI.swift in Sources */,
@@ -595,17 +601,22 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"CyberWiseMain/Preview Content\"";
 				DEVELOPMENT_TEAM = 3KKV6QX62R;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = CyberWiseMain/Info.plist;
+				INFOPLIST_KEY_NSFaceIDUsageDescription = "Face ID is used to unlock the app securely.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = "";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.6;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -624,17 +635,22 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"CyberWiseMain/Preview Content\"";
 				DEVELOPMENT_TEAM = 3KKV6QX62R;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = CyberWiseMain/Info.plist;
+				INFOPLIST_KEY_NSFaceIDUsageDescription = "Face ID is used to unlock the app securely.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = "";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.6;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

@@ -99,8 +99,10 @@ struct TopSectionView: View {
         }
         .padding(.top, -30)
         .sheet(isPresented: $showSettings) {
-            SettingsModalView()
-                .environmentObject(loginManager) // Pass login manager to settings
+            NavigationView{
+                SettingsModalView()
+                    .environmentObject(loginManager)
+            }
         }
     }
 }
@@ -174,8 +176,7 @@ struct StaySafeSectionView: View {
                     .padding(.horizontal, 20)
             }
             
-            // Grid of Buttons
-            LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible())], spacing: 15) {
+            LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible())], spacing: 0) {
                 // Check For Scams Button
                 NavigationLink(destination: CheckForScamsPageUI().navigationBarBackButtonHidden(true)) {
                     FeatureButtonView(
@@ -185,7 +186,7 @@ struct StaySafeSectionView: View {
                         color: Color(hex: "AED6F1")
                     )
                 }
-                
+
                 // Verify Callers Button
                 NavigationLink(destination: VerifyCallersPageUI().navigationBarBackButtonHidden(true)) {
                     FeatureButtonView(
@@ -195,8 +196,13 @@ struct StaySafeSectionView: View {
                         color: Color(hex: "A9DFBF")
                     )
                 }
+            }
+            .padding(.horizontal, 15)
+
+            HStack {
+                Spacer()
                 
-                // Password Vault Button
+                // Password Vault Button centered
                 NavigationLink(destination: ManagePasswordsPageUI().navigationBarBackButtonHidden(true)) {
                     FeatureButtonView(
                         icon: "key.fill",
@@ -204,10 +210,12 @@ struct StaySafeSectionView: View {
                         description: "Keep All Your Passwords Safe And Easily Accessible",
                         color: Color(hex: "F9E79F")
                     )
+                    .frame(maxWidth: 200) // Optional: limit width for better centering
                 }
+                Spacer()
             }
-            .padding(.horizontal, 15)
-            .padding(.top, 5)
+            .padding(.top, -5)
+            .padding(.horizontal, 5)
         }
         .padding(.vertical, 10)
     }
@@ -272,7 +280,7 @@ struct SettingsModalView: View {
                 .padding(.top, 10)
 
             // Change Password Option
-            NavigationLink(destination: ChangePasswordView().environmentObject(loginManager).navigationBarBackButtonHidden(false)) {
+            NavigationLink(destination: ChangePasswordView().environmentObject(loginManager).navigationBarBackButtonHidden(true)) {
                 HStack {
                     Image(systemName: "key.fill")
                     Text("Change Password")
@@ -288,7 +296,7 @@ struct SettingsModalView: View {
             }
 
             // Change Profile Picture Option
-            NavigationLink(destination: AvatarSelectorView().environmentObject(loginManager).navigationBarBackButtonHidden(false)) {
+            NavigationLink(destination: AvatarSelectorView().environmentObject(loginManager).navigationBarBackButtonHidden(true)) {
                 HStack {
                     Image(systemName: "person.crop.circle.fill")
                     Text("Change Profile Picture")
@@ -303,7 +311,6 @@ struct SettingsModalView: View {
                 .foregroundColor(.black)
             }
             
-            // FAQ Page Option
             NavigationLink(destination: FAQPageUI().navigationBarBackButtonHidden(false)) {
                 HStack {
                     Image(systemName: "questionmark.circle.fill")

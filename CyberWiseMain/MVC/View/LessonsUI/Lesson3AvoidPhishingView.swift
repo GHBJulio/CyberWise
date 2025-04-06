@@ -43,7 +43,8 @@ struct Lesson3AvoidPhishingView: View {
                 }
             }.background(
                 NavigationLink("", destination: LearnPageUI().navigationBarBackButtonHidden(true).environmentObject(loginManager), isActive: $navigateToHub)
-                )
+                ).navigationBarBackButtonHidden(true)
+
         }
     }
 }
@@ -165,7 +166,6 @@ What should you do first?
                         .cornerRadius(8).foregroundColor(.black)
                 }
             }
-
             Spacer()
         }
         .padding()

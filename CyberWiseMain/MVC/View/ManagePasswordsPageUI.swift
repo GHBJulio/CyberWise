@@ -8,9 +8,11 @@ struct ManagePasswordsPageUI: View {
     @State private var newPasswordTitle: String = ""
     @State private var newPassword: String = ""
     @State private var selectedPassword: PasswordEntry? = nil
+    @State private var passwordToDelete: PasswordEntry? = nil
     @State private var isUnlockingPassword = false
     @State private var enteredLoginPassword = ""
     @State private var showPasswordVerification = false
+    @State private var showDeleteVerification = false
     @State private var errorMessage: String? = nil
     @State private var successMessage: String? = nil
     @State private var decryptedPassword: String? = nil
@@ -82,6 +84,24 @@ struct ManagePasswordsPageUI: View {
                 if let errorMessage = errorMessage {
                     Text(errorMessage)
                         .foregroundColor(.red)
+                }
+            })
+            .alert("Confirm Password Deletion", isPresented: $showDeleteVerification, actions: {
+                SecureField("Enter Login Password to Confirm", text: $enteredLoginPassword)
+                Button("Delete", role: .destructive) {
+                    validateDeletePassword()
+                }
+                Button("Cancel", role: .cancel) {
+                    passwordToDelete = nil
+                    enteredLoginPassword = ""
+                    errorMessage = nil
+                }
+            }, message: {
+                if let errorMessage = errorMessage {
+                    Text(errorMessage)
+                        .foregroundColor(.red)
+                } else {
+                    Text("This action cannot be undone.")
                 }
             })
         }
@@ -172,7 +192,8 @@ struct ManagePasswordsPageUI: View {
                 }
                 
                 Button(action: {
-                    passwordManager.deletePassword(entryId: entry.id)
+                    passwordToDelete = entry
+                    showDeleteVerification = true
                 }) {
                     Image(systemName: "trash")
                         .foregroundColor(.red.opacity(0.8))
@@ -365,6 +386,19 @@ struct ManagePasswordsPageUI: View {
             if let selectedPassword = selectedPassword {
                 decryptedPassword = passwordManager.decryptPassword(selectedPassword.encryptedPassword)
                 isUnlockingPassword = true
+            }
+            enteredLoginPassword = ""
+            errorMessage = nil
+        } else {
+            errorMessage = "Incorrect password. Please try again."
+        }
+    }
+    
+    func validateDeletePassword() {
+        if let user = loginManager.currentUser, enteredLoginPassword == user.password {
+            if let passwordToDelete = passwordToDelete {
+                passwordManager.deletePassword(entryId: passwordToDelete.id)
+                self.passwordToDelete = nil
             }
             enteredLoginPassword = ""
             errorMessage = nil

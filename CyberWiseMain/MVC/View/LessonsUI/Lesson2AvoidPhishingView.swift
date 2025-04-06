@@ -43,8 +43,10 @@ struct Lesson2AvoidPhishingView: View {
                 }
             }.background(
                 NavigationLink("", destination: LearnPageUI().navigationBarBackButtonHidden(true).environmentObject(loginManager), isActive: $navigateToHub)
-                )
+                ).navigationBarBackButtonHidden(true)
+
         }
+
     }
 }
 
@@ -140,9 +142,9 @@ struct SpottingRedFlagsSection2View: View {
                     .cornerRadius(8)
 
                 // 🔹 Keeps flag rectangles in the same position
-                makeFlagRectangle(title: "Fake email address", x: 158, y: 75, width: 170, height: 40)
-                makeFlagRectangle(title: "Generic greeting", x: 100, y: 240, width: 100, height: 20)
-                makeFlagRectangle(title: "Strange link domain", x: 130, y: 350, width: 160, height: 20)
+                makeFlagRectangle(title: "Fake email address", x: 177, y: 130, width: 170, height: 40)
+                makeFlagRectangle(title: "Generic greeting", x: 110, y: 295, width: 100, height: 20)
+                makeFlagRectangle(title: "Strange link domain", x: 150, y: 405, width: 160, height: 20)
             }
             .padding(.top, 5) // 🔹 Adjusted to reduce unnecessary space
 
@@ -182,7 +184,7 @@ struct SpottingRedFlagsSection2View: View {
         .alert("Lesson Complete!", isPresented: $showCompletionAlert) {
             Button("OK") {
                 let currentProgress = loginManager.getProgress(for: "Avoid Phishing")
-                if currentProgress < 2 {
+                if currentProgress <= 2 {
                     loginManager.updateProgress(for: "Avoid Phishing", session: 3)
                 }
                 navigateToHub = true

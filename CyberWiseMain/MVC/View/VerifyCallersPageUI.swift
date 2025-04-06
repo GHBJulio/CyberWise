@@ -385,12 +385,18 @@ struct VerifyCallersPageUI: View {
     @State private var isLoading = false
     @State private var showHistory = false
     
+    // New state variables for reporting alerts
+    @State private var showConfirmReport = false
+    @State private var showSecondConfirmReport = false
+    @State private var showReportResultAlert = false
+    @State private var reportResultMessage: String = ""
+    
     // View Model
     @StateObject private var historyManager = VerificationHistoryManager()
     
     // Reordered countries: +1 (USA) and +44 (UK) at the top, rest follow
     private let displayedCountries: [Country]
-
+    
     init() {
         // Identify the "popular" codes
         let popularCodes = ["+1", "+44"]
@@ -414,7 +420,6 @@ struct VerifyCallersPageUI: View {
                     .ignoresSafeArea()
                 
                 VStack(spacing: 0) {
-                    
                     StandardLessonHeader(
                         title: "Verify Callers",
                         isFirstSection: .constant(false), // No section tracking
@@ -423,16 +428,15 @@ struct VerifyCallersPageUI: View {
                         onBackPressed: { dismiss() } // Normal back action
                     ).font(.headline) .fontWeight(.bold) .foregroundColor(Color(hex: "6D8FDF"))
                     
-                        
-                        Button {
-                            withAnimation(.easeInOut(duration: 0.3)) {
-                                showHistory.toggle()
-                            }
-                        } label: {
-                            Image(systemName: showHistory ? "phone.fill" : "clock.arrow.circlepath")
-                                .font(.system(size: 25))
-                                .foregroundColor(.white)
+                    Button {
+                        withAnimation(.easeInOut(duration: 0.3)) {
+                            showHistory.toggle()
                         }
+                    } label: {
+                        Image(systemName: showHistory ? "phone.fill" : "clock.arrow.circlepath")
+                            .font(.system(size: 25))
+                            .foregroundColor(.white)
+                    }
                     .padding(.horizontal, 8)
                     .padding(.vertical, 8)
                     .background(Color(hex: "6D8FDF")).offset(x:170, y:-60)
@@ -445,6 +449,42 @@ struct VerifyCallersPageUI: View {
                 }
             }
             .navigationBarHidden(true)
+            // First confirmation alert
+            .alert("Report Phone Number", isPresented: $showConfirmReport) {
+                Button("Yes, Report this Number", role: .destructive) {
+                    showSecondConfirmReport = true
+                }
+                Button("Cancel", role: .cancel) {}
+            } message: {
+                Text("Are you sure you want to report this phone number as potentially fraudulent?")
+            }
+            // Second confirmation alert
+            .alert("Confirm Report", isPresented: $showSecondConfirmReport) {
+                Button("Yes, I'm Sure", role: .destructive) {
+                    reportPhoneNumber()
+                }
+                Button("Cancel", role: .cancel) {}
+            } message: {
+                Text("This will submit a report to our database. Continue?")
+            }
+            // Result alert
+            .alert("Report Status", isPresented: $showReportResultAlert) {
+                Button("OK", role: .cancel) {}
+            } message: {
+                Text(reportResultMessage)
+            }
+            // Add gesture recognizer to dismiss keyboard when tapping outside
+            .contentShape(Rectangle())
+            .onTapGesture {
+                hideKeyboard()
+            }
+        }
+    }
+    
+    
+    private func checkIfNumberWasPreviouslyVerified(phoneNumber: String, countryCode: String) -> PhoneVerificationRecord? {
+        return historyManager.verificationHistory.first { record in
+            record.phoneNumber == phoneNumber && record.countryCode == countryCode
         }
     }
     
@@ -564,6 +604,25 @@ struct VerifyCallersPageUI: View {
                         VerificationResultCard(response: response, phoneNumber: "\(selectedCountry.code)\(phoneNumber)")
                             .padding(.horizontal, 20)
                             .padding(.top, 10)
+                        
+                        // Report Button - Added at the bottom of screen when results are present
+                        Button {
+                            showConfirmReport = true
+                        } label: {
+                            HStack {
+                                Image(systemName: "exclamationmark.triangle.fill")
+                                Text("Report This Number")
+                                    .fontWeight(.medium)
+                            }
+                            .foregroundColor(.white)
+                            .frame(height: 50)
+                            .frame(maxWidth: .infinity)
+                            .background(Color.red)
+                            .cornerRadius(15)
+                            .shadow(color: Color.red.opacity(0.3), radius: 5, x: 0, y: 2)
+                            .padding(.horizontal, 20)
+                            .padding(.top, 15)
+                        }
                     }
                     
                     Spacer(minLength: 30)
@@ -593,7 +652,7 @@ struct VerifyCallersPageUI: View {
                                     .font(.headline)
                                     .padding(.top, 16)
                                     .padding(.bottom, 8)
-                                    
+                                
                                 Divider()
                                 
                                 ScrollView {
@@ -653,9 +712,30 @@ struct VerifyCallersPageUI: View {
                             .cornerRadius(16)
                             .frame(maxWidth: 340)
                         }
-                        .padding(.horizontal, 24)
+                            .padding(.horizontal, 24)
                     )
                     .zIndex(100) // Ensure it appears on top
+            }
+        }
+    }
+    
+    // New function to report phone number after double confirmation
+    func reportPhoneNumber() {
+        let sanitizedNumber = phoneNumber.filter(\.isNumber) // remove +, spaces, dashes
+        let parameters = [
+            "phone": sanitizedNumber,
+            "country": selectedCountry.isoCode // "US" for United States, etc.
+        ]
+        
+        FraudReportingAPI().reportFraud(parameters: parameters) { result in
+            DispatchQueue.main.async {
+                switch result {
+                case .success(let response):
+                    reportResultMessage = "Report successful: \(response.message)"
+                case .failure(let error):
+                    reportResultMessage = "Reporting error: \(error.localizedDescription)"
+                }
+                showReportResultAlert = true
             }
         }
     }
@@ -736,8 +816,16 @@ struct VerifyCallersPageUI: View {
         }
     }
     
-    // MARK: - Verify Phone Number
+    // Function to hide keyboard
+    private func hideKeyboard() {
+        UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
+    }
+    
+    // Then modify your verifyPhoneNumber() function
     func verifyPhoneNumber() {
+        // Hide keyboard when verifying
+        hideKeyboard()
+        
         guard !phoneNumber.isEmpty else {
             errorMessage = "Please enter a phone number"
             return
@@ -748,6 +836,38 @@ struct VerifyCallersPageUI: View {
             return
         }
         
+        // Check if this number was verified before
+        if let previousRecord = checkIfNumberWasPreviouslyVerified(phoneNumber: phoneNumber, countryCode: selectedCountry.code) {
+            // Create alert for repeated check
+            let alert = UIAlertController(
+                title: "Number Previously Checked",
+                message: "You've checked this number before on \(previousRecord.formattedDate). The risk score was \(previousRecord.fraudScore). Do you want to check it again?",
+                preferredStyle: .alert
+            )
+            
+            alert.addAction(UIAlertAction(title: "Yes, Check Again", style: .default) { _ in
+                // User wants to proceed, continue with verification
+                self.performVerification()
+            })
+            
+            alert.addAction(UIAlertAction(title: "No, Cancel", style: .cancel) { _ in
+                // User chose to cancel, do nothing
+            })
+            
+            // Find the current view controller to present the alert
+            if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
+               let rootViewController = windowScene.windows.first?.rootViewController {
+                rootViewController.present(alert, animated: true)
+            }
+            
+        } else {
+            // No previous check, proceed directly
+            performVerification()
+        }
+    }
+    
+    // Extract the actual API call to its own method
+    private func performVerification() {
         isLoading = true
         errorMessage = nil
         

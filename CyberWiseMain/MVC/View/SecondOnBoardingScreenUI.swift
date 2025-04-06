@@ -4,52 +4,61 @@
 //
 //  Created by GUILHERME JULIO on 20/12/2024.
 //
-
 import SwiftUI
 
 struct SecondOnBoardingScreenUI: View {
+    var onFinish: () -> Void
+    @EnvironmentObject var loginManager: LoginManager
+
     var body: some View {
-        NavigationView{
-            ZStack
-            {
+        NavigationStack {
+            ZStack {
                 Color(hex: "6D8FDF").ignoresSafeArea()
-                Rectangle().foregroundColor(Color(hex: "F1FFF3")).frame(width: 430, height: 624).cornerRadius(110).offset(x:0, y:130)
-                VStack
-                {
+
+                Rectangle()
+                    .foregroundColor(Color(hex: "F1FFF3"))
+                    .frame(width: 430, height: 624)
+                    .cornerRadius(110)
+                    .offset(y: 130)
+
+                VStack {
                     Text("Are You Ready To\nTake Control Of\nYour Privacy?")
                         .foregroundColor(.white)
                         .font(.system(size: 30, weight: .semibold, design: .rounded))
-                        .multilineTextAlignment(.center) // Aligns text in the center
-                        .padding(.top, 30) // Adjusts the top padding as necessary
+                        .multilineTextAlignment(.center)
+                        .padding(.top, 30)
 
                     Spacer()
-                    
+
                     ZStack {
                         Circle()
                             .frame(width: 248, height: 248)
                             .foregroundColor(Color(hex: "DFF7E2"))
-                        
-                        Image("secondonboardingimage").offset(x:0,y:-25)
+
+                        Image("secondonboardingimage").offset(y: -25)
                     }
+
                     Spacer()
-                    
+
                     Button(action: {
-                        
-                    }, label: {
-                        NavigationLink(destination: HomeScreenUI().navigationBarBackButtonHidden(true)) {
-                            Text("Next")
-                                .foregroundColor(.black).font(.system(size: 30, weight: .semibold, design: .rounded))
+                        onFinish()
+                        loginManager.markOnboardingComplete()
+
+                    }) {
+                        VStack {
+                            Text("Get Started")
+                                .foregroundColor(.black)
+                                .font(.system(size: 30, weight: .semibold, design: .rounded))
+                            Image("secondnext")
                         }
-                    }).offset(x:0, y:-100)
-                    
-                    Image("secondnext").offset(x:0, y:-100)
+                    }
+                    .offset(y: -100)
                 }
-                
             }
         }
     }
 }
 
 #Preview {
-    SecondOnBoardingScreenUI()
+    SecondOnBoardingScreenUI(onFinish: {}).environmentObject(LoginManager())
 }

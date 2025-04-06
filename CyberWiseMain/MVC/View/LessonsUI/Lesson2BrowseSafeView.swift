@@ -41,7 +41,7 @@ struct Lesson2BrowseSafeView: View {
                     Spacer()
                 }
             }.background(
-                NavigationLink("", destination: LearnPageUI().environmentObject(loginManager).navigationBarBackButtonHidden(true), isActive: $navigateToHub)
+                NavigationLink("", destination: LearnPageUI().navigationBarBackButtonHidden(true), isActive: $navigateToHub)
             )
             .navigationBarHidden(true)
         }
@@ -109,7 +109,7 @@ Phishing sites often use subtle misspellings or unusual endings to trick you.
                     isCorrect = true
                     showFeedback = true
                 }) {
-                    Text("www.googl3.c0m")
+                    Text(AttributedString("www.googl3.c0m"))
                         .frame(maxWidth: .infinity)
                         .padding()
                         .background(Color.blue.opacity(0.2))
@@ -121,7 +121,7 @@ Phishing sites often use subtle misspellings or unusual endings to trick you.
                     isCorrect = false
                     showFeedback = true
                 }) {
-                    Text("www.google.com")
+                    Text(AttributedString("www.google.com"))
                         .frame(maxWidth: .infinity)
                         .padding()
                         .background(Color.yellow.opacity(0.2))
@@ -156,7 +156,7 @@ struct Lesson2Section2View: View {
     
     @State private var safeBox: [String] = []
     @State private var warningBox: [String] = []
-    
+    @State private var navigateToHub: Bool = false
     @State private var selectedURL: String? = nil
     @State private var showCategoryAlert = false
     @State private var showFeedback = false
@@ -270,6 +270,10 @@ struct Lesson2Section2View: View {
                 .cornerRadius(10)
             }
         }
+        .background(
+                       NavigationLink("", destination: LearnPageUI().navigationBarBackButtonHidden(true), isActive: $navigateToHub)
+                   )
+                   .navigationBarHidden(true)
         .padding()
         .alert("Select Category", isPresented: $showCategoryAlert) {
             Button("Safe") { moveURL(to: &safeBox) }
@@ -289,7 +293,7 @@ struct Lesson2Section2View: View {
                     if currentProgress < 3 {
                         loginManager.updateProgress(for: "Browse Safe", session: 3)
                     }
-                    dismiss()
+                    navigateToHub = true
                 }
             }
         } message: {

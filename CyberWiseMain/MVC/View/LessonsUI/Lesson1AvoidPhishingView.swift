@@ -110,7 +110,7 @@ struct Lesson1AvoidPhishingView: View {
                     if isAnswerCorrect {
                         // Update progress to session 1 for "Avoid Phishing"
                         let currentProgress = loginManager.getProgress(for: "Avoid Phishing")
-                        if currentProgress < 1 {
+                        if currentProgress <= 1 {
                             loginManager.updateProgress(for: "Avoid Phishing", session: 2)
                         }
                         // Navigate back to the LearningHubUI

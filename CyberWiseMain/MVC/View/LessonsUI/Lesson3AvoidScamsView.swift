@@ -17,7 +17,7 @@ struct Lesson3AvoidScamsView: View {
                 backgroundColor.ignoresSafeArea()
                 VStack(spacing: 0) {
 //                    // Standard header component
-                    StandardLessonHeader( title: "Spotting Fake URLs", isFirstSection: $isFirstSection,  onExitConfirmed: { navigateToHub = true }, onBackPressed: { isFirstSection = true } ).font(.headline) .fontWeight(.bold) .foregroundColor(primaryColor)
+                    StandardLessonHeader( title: "Advanced Scam Tactics", isFirstSection: $isFirstSection,  onExitConfirmed: { navigateToHub = true }, onBackPressed: { isFirstSection = true } ).font(.headline) .fontWeight(.bold) .foregroundColor(primaryColor)
                     
                     // White Card Container with dynamic content
                     VStack {
@@ -52,7 +52,7 @@ struct Lesson3AvoidScamsView: View {
             .alert("Scam Survival Complete!", isPresented: $showCompletionAlert) {
                 Button("OK") {
                     let currentProgress = loginManager.getProgress(for: "Avoid Scams")
-                    if currentProgress < 3 {
+                    if currentProgress <= 3 {
                         loginManager.updateProgress(for: "Avoid Scams", session: 3)
                     }
                     navigateToHub = true

@@ -7,7 +7,8 @@ struct Lesson1BrowseSafeView: View {
     @State private var canNavigate: Bool = false  // Controls navigation to Section2
     @State private var showExitAlert: Bool = false  // Controls exit confirmation
     @State private var navigateToHub: Bool = false    // Controls navigation to LearnPageUI
-    
+    @EnvironmentObject var loginManager: LoginManager
+
     // Your preferred colors
     private let primaryColor = Color(hex: "6D8FDF")  // Blue
     private let backgroundColor = Color(hex: "F1FFF3") // Soft greenish
@@ -94,7 +95,7 @@ struct Lesson1BrowseSafeView: View {
                     Spacer()
                     
                     // MARK: Next Button & Navigation
-                    NavigationLink(destination: Section2View(), isActive: $canNavigate) {
+                    NavigationLink(destination: Section2View().environmentObject(loginManager), isActive: $canNavigate) {
                         EmptyView()
                     }
                     
@@ -118,9 +119,9 @@ struct Lesson1BrowseSafeView: View {
                 }
             }
             .background(
-                NavigationLink("", destination: LearnPageUI().navigationBarBackButtonHidden(true).environmentObject(LoginManager()), isActive: $navigateToHub)
-            )
-            .navigationBarHidden(true)
+                           NavigationLink("", destination: LearnPageUI().navigationBarBackButtonHidden(true), isActive: $navigateToHub)
+                       )
+                       .navigationBarHidden(true)
         }
     }
 }
@@ -141,7 +142,6 @@ struct Section2View: View {
     @State private var feedbackMessage: String = ""
 
     var body: some View {
-        NavigationStack {
             ZStack {
                 backgroundColor.ignoresSafeArea()
 
@@ -173,10 +173,6 @@ struct Section2View: View {
                         VStack(spacing: 10) {
                             // ✅ Correct Answer Button
                             Button(action: {
-                                let currentProgress = loginManager.getProgress(for: "Browse Safe")
-                                if currentProgress == 1 {
-                                    loginManager.updateProgress(for: "Browse Safe", session: 2)
-                                }
                                 isAnswerCorrect = true
                                 feedbackMessage = "Correct! This website uses “https” and a padlock icon."
                                 showFeedback = true
@@ -216,11 +212,18 @@ struct Section2View: View {
 
                     Spacer()
                 }
-            }
+                .background(
+                               NavigationLink("", destination: LearnPageUI().navigationBarBackButtonHidden(true), isActive: $navigateToHub)
+                           )
+                           .navigationBarHidden(true)
             .alert("Website Security Check", isPresented: $showFeedback) {
                 Button("OK") {
                     if isAnswerCorrect {
-                        dismiss()
+                        let currentProgress = loginManager.getProgress(for: "Browse Safe")
+                        if currentProgress <= 1 {
+                            loginManager.updateProgress(for: "Browse Safe", session: 2)
+                        }
+                        navigateToHub = true
                     }
                 }
             } message: {

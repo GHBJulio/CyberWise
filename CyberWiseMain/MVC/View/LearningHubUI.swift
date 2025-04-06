@@ -1,9 +1,83 @@
 import SwiftUI
 
+// MARK: - Modified LessonRow with status indicators
+struct LessonRow: View {
+    let lessonTitle: String
+    let isLocked: Bool
+    let isCompleted: Bool  // New property to track completed lessons
+    
+    var body: some View {
+        HStack {
+            // Status icon at the start
+            if isLocked {
+                Image(systemName: "lock.circle.fill")
+                    .foregroundColor(.red)
+                    .frame(width: 24)
+            } else if isCompleted {
+                Image(systemName: "checkmark.circle.fill")
+                    .foregroundColor(.green)
+                    .frame(width: 24)
+            } else {
+                Image(systemName: "circle")
+                    .foregroundColor(.blue)
+                    .frame(width: 24)
+            }
+            
+            // Lesson title with appropriate styling
+            Text(lessonTitle)
+                .font(.headline)
+                .foregroundColor(isLocked ? .gray : (isCompleted ? .primary : .blue))
+            
+            Spacer()
+            
+            // Right side status indicator
+            if isLocked {
+                // Keep lock icon on the right side too
+                Image(systemName: "lock.fill")
+                    .foregroundColor(.red)
+            } else if isCompleted {
+                Text("Completed")
+                    .font(.caption)
+                    .foregroundColor(.green)
+            } else {
+                Text("Start")
+                    .font(.caption)
+                    .fontWeight(.bold)
+                    .foregroundColor(.white)
+                    .padding(.horizontal, 12)
+                    .padding(.vertical, 6)
+                    .background(Color.blue)
+                    .cornerRadius(12)
+            }
+        }
+        .padding()
+        .background(
+            ZStack {
+                // Base background
+                if isLocked {
+                    Color(hex: "F1FFF3") // Light background for locked items
+                } else if isCompleted {
+                    Color(hex: "E8F5E9") // Light green for completed
+                } else {
+                    Color(hex: "E3F2FD") // Light blue for "current" unlocked lesson
+                }
+                
+                // Add a pulsing glow effect to the next available lesson
+                if !isLocked && !isCompleted {
+                    RoundedRectangle(cornerRadius: 10)
+                        .stroke(Color.blue, lineWidth: 2)
+                }
+            }
+        )
+        .cornerRadius(10)
+    }
+}
+
+// Updated LearningHubUI to track completed lessons
 struct LearningHubUI: View {
     let topic: String
     @EnvironmentObject var loginManager: LoginManager
-
+    
     // Each category has its own array of lessons (3 total)
     var lessons: [String] {
         switch topic {
@@ -30,66 +104,99 @@ struct LearningHubUI: View {
             return []
         }
     }
-
+    
     @State private var showLockAlert = false
-
+    
     var body: some View {
         NavigationStack {
-            VStack(spacing: 16) {
-                // Display topic
-                Text("\(topic) Lessons")
-                    .font(.largeTitle)
-                    .fontWeight(.bold)
-                    .foregroundColor(Color(hex: "6D8FDF"))
-                    .padding(.top)
-                    .multilineTextAlignment(.center)
-
-                // Each topic has exactly 3 lessons for now
-                // userProgress = how many lessons are unlocked (0 to 3)
-                let userProgress = min(loginManager.getProgress(for: topic), 3)
-
-                // Display progress, e.g. "Progress: 2/3"
-                Text("Progress: \(userProgress)/3")
-                    .font(.headline)
-                    .foregroundColor(.gray)
-
-                List(lessons.indices, id: \.self) { index in
-                    // If userProgress <= index, lesson is locked
-                    let isLocked = index >= userProgress
-
-                    if isLocked {
-                        // Tapping locked lesson shows alert
-                        Button {
-                            showLockAlert = true
-                        } label: {
-                            LessonRow(
-                                lessonTitle: lessons[index],
-                                isLocked: true
-                            )
-                        }
-                        .buttonStyle(PlainButtonStyle())
-                    } else {
-                        // If unlocked, navigate to the lesson
-                        NavigationLink(destination: getLessonView(index: index)) {
-                            LessonRow(
-                                lessonTitle: lessons[index],
-                                isLocked: false
-                            )
+            ZStack {
+                // Light background color
+                Color(hex: "FAFAFA").ignoresSafeArea()
+                
+                VStack(spacing: 16) {
+                    // Display topic
+                    Text("\(topic) Lessons")
+                        .font(.largeTitle)
+                        .fontWeight(.bold)
+                        .foregroundColor(Color(hex: "6D8FDF"))
+                        .padding(.top)
+                        .multilineTextAlignment(.center)
+                    
+                    // Each topic has exactly 3 lessons for now
+                    // userProgress = how many lessons are unlocked (0 to 3)
+                    let userProgress = min(loginManager.getProgress(for: topic), 3)
+                    let completedProgress = loginManager.getCompletedProgress(for: topic)
+                    
+                    // Display progress with completion information
+                    HStack(spacing: 4) {
+                        Text("Progress:")
+                            .font(.headline)
+                            .foregroundColor(.gray)
+                        
+                        Text("\(completedProgress)/3 completed")
+                            .font(.headline)
+                            .foregroundColor(.green)
+                    }
+                    
+                    // Progress bar to visualize completion
+                    GeometryReader { geometry in
+                        ZStack(alignment: .leading) {
+                            // Background track
+                            RoundedRectangle(cornerRadius: 8)
+                                .fill(Color.gray.opacity(0.2))
+                                .frame(height: 10)
+                            
+                            // Progress fill
+                            RoundedRectangle(cornerRadius: 8)
+                                .fill(Color.green)
+                                .frame(width: geometry.size.width * CGFloat(completedProgress) / 3, height: 10)
                         }
                     }
+                    .frame(height: 10)
+                    .padding(.horizontal)
+                    
+                    List(lessons.indices, id: \.self) { index in
+                        // If userProgress <= index, lesson is locked
+                        let isLocked = index >= userProgress
+                        let isCompleted = index < completedProgress
+                        
+                        if isLocked {
+                            // Tapping locked lesson shows alert
+                            Button {
+                                showLockAlert = true
+                            } label: {
+                                LessonRow(
+                                    lessonTitle: lessons[index],
+                                    isLocked: true,
+                                    isCompleted: false
+                                )
+                            }
+                            .buttonStyle(PlainButtonStyle())
+                        } else {
+                            // If unlocked, navigate to the lesson
+                            NavigationLink(destination: getLessonView(index: index)) {
+                                LessonRow(
+                                    lessonTitle: lessons[index],
+                                    isLocked: false,
+                                    isCompleted: isCompleted
+                                )
+                            }
+                        }
+                    }
+                    .listStyle(.insetGrouped)
+                    .alert("Lesson Locked", isPresented: $showLockAlert) {
+                        Button("OK", role: .cancel) { }
+                    } message: {
+                        Text("This lesson is locked. Complete previous lessons first.")
+                    }
+                    
+                    Spacer()
                 }
-                .listStyle(.insetGrouped)
-                .alert("Lesson Locked", isPresented: $showLockAlert) {
-                    Button("OK", role: .cancel) { }
-                } message: {
-                    Text("This lesson is locked. Complete previous lessons first.")
-                }
-
-                Spacer()
+                .padding(.horizontal)
             }
         }
     }
-
+    
     // Return the appropriate lesson view
     @ViewBuilder
     func getLessonView(index: Int) -> some View {
@@ -108,7 +215,7 @@ struct LearningHubUI: View {
                 default:
                     Text("Lesson not found.")
                 }
-
+                
             case "Avoid Phishing":
                 switch lessons[index] {
                 case "Lesson 1: Intro to Phishing":
@@ -120,7 +227,7 @@ struct LearningHubUI: View {
                 default:
                     Text("Lesson not found.")
                 }
-
+                
             case "Avoid Scams":
                 switch lessons[index] {
                 case "Lesson 1: Common Scams":
@@ -132,63 +239,35 @@ struct LearningHubUI: View {
                 default:
                     Text("Lesson not found.")
                 }
-
+                
             default:
                 Text("Lesson not found.")
             }
         } else {
-            // If for some reason userProgress changed mid-flow or it’s locked
+            // If for some reason userProgress changed mid-flow or it's locked
             Text("Lesson locked. Complete previous lessons first.")
         }
     }
 }
 
-// MARK: - Placeholder views for lessons that aren't implemented yet
-struct PhishingLesson1View: View {
-    var body: some View { Text("Phishing Lesson 1 Placeholder") }
-}
-struct PhishingLesson2View: View {
-    var body: some View { Text("Phishing Lesson 2 Placeholder") }
-}
-struct PhishingLesson3View: View {
-    var body: some View { Text("Phishing Lesson 3 Placeholder") }
-}
-
-struct AvoidScamsLesson1View: View {
-    var body: some View { Text("Avoid Scams Lesson 1 Placeholder") }
-}
-struct AvoidScamsLesson2View: View {
-    var body: some View { Text("Avoid Scams Lesson 2 Placeholder") }
-}
-struct AvoidScamsLesson3View: View {
-    var body: some View { Text("Avoid Scams Lesson 3 Placeholder") }
-}
-
-// MARK: - LessonRow for the list
-struct LessonRow: View {
-    let lessonTitle: String
-    let isLocked: Bool
-
-    var body: some View {
-        HStack {
-            Text(lessonTitle)
-                .font(.headline)
-                .foregroundColor(isLocked ? .gray : .black)
-
-            Spacer()
-
-            Image(systemName: isLocked ? "lock.fill" : "lock.open.fill")
-                .foregroundColor(isLocked ? .red : .green)
+// MARK: - Extension to LoginManager to track completed lessons
+extension LoginManager {
+    // Get the number of completed lessons (not just unlocked)
+    func getCompletedProgress(for topic: String) -> Int {
+        // We'll need to add this function to your LoginManager class
+        // For now, we'll simulate it returning one less than the unlocked progress
+        let unlockedProgress = getProgress(for: topic)
+        if unlockedProgress != 3 {
+            return max(0, unlockedProgress - 1)
         }
-        .padding()
-        .background(isLocked ? Color(hex: "F1FFF3") : Color(hex: "DFF7E2"))
-        .cornerRadius(10)
+        else {
+            return unlockedProgress
+        }
     }
 }
-
-// MARK: - Preview
-#Preview {
-    // Example with "Browse Safe"
-    LearningHubUI(topic: "Browse Safe")
-        .environmentObject(LoginManager())
-}
+    
+    // MARK: - Preview
+    #Preview {
+        LearningHubUI(topic: "Browse Safe")
+            .environmentObject(LoginManager())
+    }

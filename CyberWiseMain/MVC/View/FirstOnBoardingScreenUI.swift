@@ -7,7 +7,16 @@
 
 import SwiftUI
 
+
+
+
+
+
+
+
 struct FirstOnBoardingScreenUI: View {
+    @AppStorage("hasCompletedOnboarding") var hasCompletedOnboarding: Bool = false
+
     var body: some View {
         NavigationStack {
             ZStack {
@@ -36,13 +45,17 @@ struct FirstOnBoardingScreenUI: View {
                     Spacer()
                     
                     // Next Button
-                    NavigationLink(destination: SecondOnBoardingScreenUI()
-                                    .navigationBarBackButtonHidden(true)) { // Disable back navigation
+                    NavigationLink {
+                        SecondOnBoardingScreenUI(onFinish: {
+                            hasCompletedOnboarding = true
+                        })
+                        .navigationBarBackButtonHidden(true)
+                    } label: {
                         VStack {
                             Text("Next")
                                 .foregroundColor(.black)
                                 .font(.system(size: 30, weight: .semibold, design: .rounded))
-                            
+
                             Image("firstnext")
                         }
                     }

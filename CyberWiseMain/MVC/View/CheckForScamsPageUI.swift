@@ -18,6 +18,10 @@ struct CheckForScamsPageUI: View {
     @State private var showHistory = false
     @StateObject private var historyManager = ScamCheckHistoryManager()
     
+    // Add this FocusState for keyboard management
+    @FocusState private var isLinkFieldFocused: Bool
+    @FocusState private var isEmailFieldFocused: Bool
+    
     var body: some View {
         NavigationStack {
             ZStack {
@@ -38,6 +42,8 @@ struct CheckForScamsPageUI: View {
                     .foregroundColor(Color(hex: "6D8FDF"))
                     
                     Button {
+                        // Dismiss keyboard when switching views
+                        dismissKeyboard()
                         withAnimation(.easeInOut(duration: 0.3)) {
                             showHistory.toggle()
                         }
@@ -59,7 +65,17 @@ struct CheckForScamsPageUI: View {
                 }
             }
             .navigationBarHidden(true)
+            // Add this gesture to dismiss keyboard when tapping anywhere on the screen
+            .onTapGesture {
+                dismissKeyboard()
+            }
         }
+    }
+    
+    // MARK: - Function to dismiss keyboard
+    private func dismissKeyboard() {
+        isLinkFieldFocused = false
+        isEmailFieldFocused = false
     }
     
     // MARK: - Main Scam Checker View
@@ -123,6 +139,7 @@ struct CheckForScamsPageUI: View {
                 .foregroundColor(.gray)
             
             TextField("Enter website URL", text: $linkToCheck)
+                .focused($isLinkFieldFocused) // Add focus binding
                 .padding()
                 .background(Color.white)
                 .cornerRadius(10)
@@ -131,6 +148,7 @@ struct CheckForScamsPageUI: View {
                 .disableAutocorrection(true)
             
             Button {
+                dismissKeyboard() // Dismiss keyboard when button is pressed
                 checkLink()
             } label: {
                 HStack {
@@ -179,6 +197,7 @@ struct CheckForScamsPageUI: View {
                 .foregroundColor(.gray)
             
             TextField("Enter email address", text: $emailToCheck)
+                .focused($isEmailFieldFocused) // Add focus binding
                 .padding()
                 .background(Color.white)
                 .cornerRadius(10)
@@ -188,6 +207,7 @@ struct CheckForScamsPageUI: View {
                 .keyboardType(.emailAddress)
             
             Button {
+                dismissKeyboard() // Dismiss keyboard when button is pressed
                 checkEmailSafety()
             } label: {
                 HStack {

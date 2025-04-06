@@ -187,7 +187,7 @@ struct Lesson2ScamsSection2View: View {
             ) {
                 EmptyView() // or Text("") if you prefer
             }
-        ).navigationBarTitle("Lesson 2: Social Engineering", displayMode: .inline)
+        ).navigationBarBackButtonHidden(false) .navigationBarTitle("Lesson 2: Social Engineering", displayMode: .inline)
         .onAppear {
             resetSimulation()
         }
@@ -263,7 +263,7 @@ struct Lesson2ScamsSection2View: View {
     private func finishLesson() {
         // Mark progress to session=3 (or however you track it)
         let currentProgress = loginManager.getProgress(for: "Avoid Scams")
-        if currentProgress < 1 {
+        if currentProgress <= 2 {
             loginManager.updateProgress(for: "Avoid Scams", session: 3)
         }
         navigateToLearnPage = true
@@ -358,7 +358,7 @@ Example: A scammer calls you, claiming to be your grandchild who needs urgent fi
                 }
             }.background(
                 NavigationLink("", destination: LearnPageUI().navigationBarBackButtonHidden(true).environmentObject(loginManager), isActive: $navigateToHub)
-                )
+                ).navigationBarBackButtonHidden(true)
             .background(
                 NavigationLink(
                     "",
