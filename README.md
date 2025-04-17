@@ -28,7 +28,7 @@ CyberWise is an iOS app designed to help older adults navigate the digital world
 ## Installation
 1. Clone the repository:
    ```bash
-   git clone https://github.com/yourusername/cyberwise.git
+   git clone https://projects.cs.nott.ac.uk/psygj1/cyberwise.git
 2. Open the project in Xcode.  
 3. Connect a compatible device or use the simulator.  
 4. Build and run the app.
