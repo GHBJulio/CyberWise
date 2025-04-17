@@ -323,7 +323,7 @@ Example: A scammer calls you, claiming to be your grandchild who needs urgent fi
 
                         Image("social_engineering_intro")
                             .resizable()
-                            .frame(width: 300, height: 260)
+                            .frame(width: 350, height: 200).offset(y:-10)
 
                         // Scenario
                         Text("""

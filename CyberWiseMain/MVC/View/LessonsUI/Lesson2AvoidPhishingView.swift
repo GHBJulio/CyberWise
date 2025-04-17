@@ -78,7 +78,7 @@ struct SpottingRedFlagsSection1View: View {
             Image("phishing_redflags")
                 .resizable()
                 .scaledToFit()
-                .frame(maxWidth: 400, maxHeight: 280).offset(y:-20)
+                .frame(maxWidth: 300, maxHeight: 380)
             
             Spacer(minLength: 10)
             
@@ -89,7 +89,7 @@ struct SpottingRedFlagsSection1View: View {
             .padding(.vertical, 15)
             .background(primaryColor)
             .foregroundColor(.white)
-            .cornerRadius(8).offset(y:-60)
+            .cornerRadius(8).offset(y:-30)
             
             Spacer(minLength: 10)
         }

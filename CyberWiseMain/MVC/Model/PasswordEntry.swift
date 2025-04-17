@@ -2,7 +2,12 @@
 //  PasswordEntry.swift
 //  CyberWiseMain
 //
-//  Created by GUILHERME JULIO on 14/04/2025.
-//
 
 import Foundation
+
+struct PasswordEntry: Identifiable, Codable {
+    let id: UUID
+    var title: String
+    let username: String
+    var encryptedPassword: String
+}

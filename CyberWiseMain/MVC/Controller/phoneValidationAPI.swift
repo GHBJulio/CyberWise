@@ -30,7 +30,7 @@ class PhoneValidationAPI {
             completion(.failure(NSError(domain: "Invalid Input", code: 0, userInfo: nil)))
             return
         }
-
+        
         // Construct the API request URL
         let urlString = "https://www.ipqualityscore.com/api/json/phone/\(apiKey)/\(encodedPhoneNumber)?country=\(encodedCountryCode)"
         guard let url = URL(string: urlString) else {

@@ -265,6 +265,7 @@ struct FeatureButtonView: View {
 struct SettingsModalView: View {
     @EnvironmentObject var loginManager: LoginManager
     @Environment(\.dismiss) var dismiss // For closing the modal
+    @State private var showDeleteConfirmation = false // For confirmation dialog
 
     var body: some View {
         VStack(spacing: 20) {
@@ -342,6 +343,22 @@ struct SettingsModalView: View {
                 .cornerRadius(10)
                 .foregroundColor(.white)
             }
+            
+            // Delete Account Option
+            Button(action: {
+                showDeleteConfirmation = true // Show confirmation dialog
+            }) {
+                HStack {
+                    Image(systemName: "trash.fill")
+                    Text("Delete Account")
+                        .font(.headline)
+                    Spacer()
+                }
+                .padding()
+                .background(Color.red)
+                .cornerRadius(10)
+                .foregroundColor(.white)
+            }
 
             Spacer() // Push content upwards
         }
@@ -349,6 +366,20 @@ struct SettingsModalView: View {
         .background(Color.white)
         .cornerRadius(20)
         .ignoresSafeArea(edges: .bottom)
+        .confirmationDialog(
+            "Delete Account",
+            isPresented: $showDeleteConfirmation,
+            titleVisibility: .visible
+        ) {
+            Button("Delete", role: .destructive) {
+                if loginManager.deleteAccount() {
+                    dismiss() // Close the modal after successful deletion
+                }
+            }
+            Button("Cancel", role: .cancel) {}
+        } message: {
+            Text("Are you sure you want to delete your account? This action cannot be undone.")
+        }
     }
 }
 

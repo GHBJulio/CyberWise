@@ -35,6 +35,8 @@
 		11A6BD132D3816BF00DE6FF4 /* LearnPageUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11A6BD122D3816BF00DE6FF4 /* LearnPageUI.swift */; };
 		11B22FDC2D0326B100B05BDC /* Account.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B22FDB2D0326B100B05BDC /* Account.swift */; };
 		11B8FA172D38144D00A0A146 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B22FE02D0337BA00B05BDC /* LoginView.swift */; };
+		11BCF7D42DACDC4C00465BFC /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11BCF7D32DACDC4C00465BFC /* User.swift */; };
+		11BCF7D62DACDC7D00465BFC /* PasswordEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11BCF7D52DACDC7D00465BFC /* PasswordEntry.swift */; };
 		11C8CE5E2D65CC07003A7B81 /* Lesson1BrowseSafeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11C8CE5D2D65CC07003A7B81 /* Lesson1BrowseSafeView.swift */; };
 		11CD898C2D32BA0600891BAD /* HomeScreenUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11CD898B2D32BA0600891BAD /* HomeScreenUI.swift */; };
 		11CD89902D32C46A00891BAD /* EmergencyAlertsPageUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11CD898F2D32C46A00891BAD /* EmergencyAlertsPageUI.swift */; };
@@ -101,6 +103,8 @@
 		11A6BD122D3816BF00DE6FF4 /* LearnPageUI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LearnPageUI.swift; sourceTree = "<group>"; };
 		11B22FDB2D0326B100B05BDC /* Account.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Account.swift; sourceTree = "<group>"; };
 		11B22FE02D0337BA00B05BDC /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
+		11BCF7D32DACDC4C00465BFC /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		11BCF7D52DACDC7D00465BFC /* PasswordEntry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasswordEntry.swift; sourceTree = "<group>"; };
 		11C8CE5D2D65CC07003A7B81 /* Lesson1BrowseSafeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Lesson1BrowseSafeView.swift; sourceTree = "<group>"; };
 		11CD898B2D32BA0600891BAD /* HomeScreenUI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeScreenUI.swift; sourceTree = "<group>"; };
 		11CD898F2D32C46A00891BAD /* EmergencyAlertsPageUI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmergencyAlertsPageUI.swift; sourceTree = "<group>"; };
@@ -243,7 +247,6 @@
 				113C05702D39971200759A78 /* emailValidatorAPI.swift */,
 				113C05722D39A72400759A78 /* phoneValidationAPI.swift */,
 				113C057A2D3D3D7700759A78 /* Country.swift */,
-				113C057C2D3D446500759A78 /* EncryptionHelper.swift */,
 				113C057E2D3D448500759A78 /* PasswordManager.swift */,
 				119B413E2D7DB45100D11C8D /* FraudReportingAPI.swift */,
 			);
@@ -254,6 +257,9 @@
 			isa = PBXGroup;
 			children = (
 				11B22FDB2D0326B100B05BDC /* Account.swift */,
+				11BCF7D32DACDC4C00465BFC /* User.swift */,
+				11BCF7D52DACDC7D00465BFC /* PasswordEntry.swift */,
+				113C057C2D3D446500759A78 /* EncryptionHelper.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -408,6 +414,7 @@
 				1126147E2D8AF1BE00E54D01 /* LockScreenView.swift in Sources */,
 				11A6BD132D3816BF00DE6FF4 /* LearnPageUI.swift in Sources */,
 				11EEED4E2D74F41A00B08776 /* Lesson3AvoidScamsView.swift in Sources */,
+				11BCF7D62DACDC7D00465BFC /* PasswordEntry.swift in Sources */,
 				113C781D2D15A40C00F5C0B6 /* FirstOnBoardingScreenUI.swift in Sources */,
 				1155EF4F2CF8E16D007EE3EB /* ContentView.swift in Sources */,
 				11A6BD0F2D38169700DE6FF4 /* LearningHubUI.swift in Sources */,
@@ -422,6 +429,7 @@
 				11EEED442D737DB100B08776 /* Lesson1AvoidPhishingView.swift in Sources */,
 				11CD898C2D32BA0600891BAD /* HomeScreenUI.swift in Sources */,
 				119B41412D7DB7B500D11C8D /* FAQPageUI.swift in Sources */,
+				11BCF7D42DACDC4C00465BFC /* User.swift in Sources */,
 				113C057F2D3D448500759A78 /* PasswordManager.swift in Sources */,
 				11EEED4A2D73BEA900B08776 /* Lesson1AvoidScamsView.swift in Sources */,
 				113C057D2D3D446500759A78 /* EncryptionHelper.swift in Sources */,

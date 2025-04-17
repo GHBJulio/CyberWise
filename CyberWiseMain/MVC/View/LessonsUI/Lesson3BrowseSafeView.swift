@@ -208,7 +208,7 @@ struct Lesson3Section2View: View {
                 if userChoice.contains("Smart! Deleting suspicious emails") {
                     let currentProgress = loginManager.getProgress(for: "Browse Safe")
                     if currentProgress < 4 {
-                       // loginManager.updateProgress(for: "Browse Safe", session: 4)
+                    loginManager.updateProgress(for: "Browse Safe", session: 4)
                     }
                     navigateToHub = true
                 }

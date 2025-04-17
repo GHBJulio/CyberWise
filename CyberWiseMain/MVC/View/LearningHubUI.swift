@@ -22,7 +22,7 @@ struct LessonRow: View {
                     .foregroundColor(.blue)
                     .frame(width: 24)
             }
-            
+
             // Lesson title with appropriate styling
             Text(lessonTitle)
                 .font(.headline)
@@ -130,12 +130,18 @@ struct LearningHubUI: View {
                     // Display progress with completion information
                     HStack(spacing: 4) {
                         Text("Progress:")
-                            .font(.headline)
-                            .foregroundColor(.gray)
-                        
-                        Text("\(completedProgress)/3 completed")
-                            .font(.headline)
-                            .foregroundColor(.green)
+                                .font(.headline)
+                                .foregroundColor(.gray)
+                            
+                            if completedProgress == 3 {
+                                Text("3/3 Completed")
+                                    .font(.headline)
+                                    .foregroundColor(.green)
+                            } else {
+                                Text("\(completedProgress)/3 completed")
+                                    .font(.headline)
+                                    .foregroundColor(.green)
+                            }
                     }
                     
                     // Progress bar to visualize completion
@@ -252,16 +258,14 @@ struct LearningHubUI: View {
 
 // MARK: - Extension to LoginManager to track completed lessons
 extension LoginManager {
-    // Get the number of completed lessons (not just unlocked)
     func getCompletedProgress(for topic: String) -> Int {
-        // We'll need to add this function to your LoginManager class
-        // For now, we'll simulate it returning one less than the unlocked progress
         let unlockedProgress = getProgress(for: topic)
-        if unlockedProgress != 3 {
-            return max(0, unlockedProgress - 1)
+            
+        if unlockedProgress == 4 {
+            return 3
         }
         else {
-            return unlockedProgress
+            return max(0, unlockedProgress - 1)
         }
     }
 }

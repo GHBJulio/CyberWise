@@ -1,24 +1,5 @@
 import Foundation
 
-struct User: Codable {
-    let username: String
-    let password: String
-    let fullName: String
-    let email: String
-    let phoneNumber: String
-    let dob: String
-    var progress: [String: Int] // Tracks progress for each topic
-    var callHistory: [String] // History of verified phone numbers
-    var scamCheckHistory: [String] // History of scam checks
-    var profileImageName: String? // Optional profile image
-    var hasAcceptedToS: Bool // Terms of Service acceptance
-    var accountCreationDate: Date // New field to track account age
-    var hasCompletedOnboarding: Bool // Add this
-    
-    func isLessonUnlocked(topic: String, lesson: Int) -> Bool {
-        return lesson <= (progress[topic] ?? 0)
-    }
-}
 
 class LoginManager: ObservableObject {
     @Published var isAuthenticated = false
@@ -361,6 +342,38 @@ class LoginManager: ObservableObject {
         }
 
         saveUserData()
+    }
+    
+    func deleteAccount() -> Bool {
+        guard let user = currentUser else { return false }
+        
+        // Remove from registered users list
+        if let index = registeredUsers.firstIndex(where: { $0.username == user.username }) {
+            registeredUsers.remove(at: index)
+            saveRegisteredUsers()
+            
+            // Delete user file
+            do {
+                if FileManager.default.fileExists(atPath: userFileURL.path) {
+                    try FileManager.default.removeItem(at: userFileURL)
+                    print("User data deleted.")
+                }
+            } catch {
+                print("Failed to delete user data: \(error.localizedDescription)")
+                return false
+            }
+            
+            // Reset current user and authentication state
+            currentUser = nil
+            isAuthenticated = false
+            errorMessage = nil
+            needsToAcceptToS = false
+            
+            print("User account has been deleted.")
+            return true
+        }
+        
+        return false
     }
     
     // MARK: - Helper Functions

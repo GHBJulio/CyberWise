@@ -53,7 +53,7 @@ struct Lesson3AvoidScamsView: View {
                 Button("OK") {
                     let currentProgress = loginManager.getProgress(for: "Avoid Scams")
                     if currentProgress <= 3 {
-                        loginManager.updateProgress(for: "Avoid Scams", session: 3)
+                        loginManager.updateProgress(for: "Avoid Scams", session: 4)
                     }
                     navigateToHub = true
                 }

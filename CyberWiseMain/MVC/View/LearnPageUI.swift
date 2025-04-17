@@ -69,7 +69,7 @@ struct LearnPageUI: View {
                         // First Row
                         HStack(spacing: 15) {
                             NavigationLink(destination: LearningHubUI(topic: "Browse Safe")) {
-                                let checkWebsiteProgress = loginManager.getProgress(for: "Browse Safe")
+                                let checkWebsiteProgress = loginManager.getCompletedProgress(for: "Browse Safe")
                                 LearnTopicView(
                                     image: "checkWebsiteImage", // Replace with your asset name
                                     title: "Browse Safe",
@@ -78,7 +78,7 @@ struct LearnPageUI: View {
                             }
                             
                             NavigationLink(destination: LearningHubUI(topic: "Avoid Phishing")) {
-                                let avoidPhisingProgress = loginManager.getProgress(for: "Avoid Phishing")
+                                let avoidPhisingProgress = loginManager.getCompletedProgress(for: "Avoid Phishing")
                                 LearnTopicView(
                                     image: "avoidPhishingImage", // Replace with your asset name
                                     title: "Avoid Phishing",
@@ -90,7 +90,7 @@ struct LearnPageUI: View {
                         
                         // Second Row (Single Button Centered)
                         NavigationLink(destination: LearningHubUI(topic: "Avoid Scams")) {
-                            let avoidScamsProgress = loginManager.getProgress(for: "Avoid Scams")
+                            let avoidScamsProgress = loginManager.getCompletedProgress(for: "Avoid Scams")
                             LearnTopicView(
                                 image: "avoidScamsImage", // Replace with your asset name
                                 title: "Avoid Scams",

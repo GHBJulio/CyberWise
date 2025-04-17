@@ -88,7 +88,7 @@ struct EmailTrapsSection1View: View {
             .padding(.vertical, 10)
             .background(primaryColor)
             .foregroundColor(.white)
-            .cornerRadius(8).offset(y:-60)
+            .cornerRadius(8).offset(y:-80)
 
             Spacer(minLength: 10)
         }
@@ -174,8 +174,8 @@ What should you do first?
                 if isAnswerCorrect {
                     // If correct, update progress to 3
                     let currentProgress = loginManager.getProgress(for: "Avoid Phishing")
-                    if currentProgress < 3 {
-                        loginManager.updateProgress(for: "Avoid Phishing", session: 3)
+                    if currentProgress < 4 {
+                        loginManager.updateProgress(for: "Avoid Phishing", session: 4)
                     }
                     navigateToHub = true
                 }
