@@ -33,3 +33,7 @@ CyberWise is an iOS app designed to help older adults navigate the digital world
 3. Connect a compatible device or use the simulator.  
 4. Build and run the app.
 
+Note: This project includes a default IPQualityScore (IPQS) API key for dissertation purposes.
+While it may work for demonstration, it is not guaranteed to remain active or support extended use.
+If needed, you can obtain your own key at ipqualityscore.com and replace it in the relevant files (the ones that call the API, e.g. MaliciousURLAPI.swift)
+
